@@ -24,7 +24,35 @@ Sequential, structural patterns
 Pattern analysis in spatiotemporal, multimedia, time-series and stream data  
 Classification : associative classification  
 Cluster analysis : frequent pattern-based clustering  
-Semantic data compression    
+Semantic data compression  
+
+### 4. Concepts  
+**Association rule X -> Y**   
+**support** : probability that a transaction contains X U Y  
+> (아이템셋 X와 Y를 모두 포함하는 트랜잭션의 수)/(전체 트랜잭션의 수)  
+
+**confidence** : conditional probability that a transaction having X also contains Y  
+> (아이템셋 Y를 포함하는 트랜잭션의 수)/(X를 포함하는 트랜잭션의 수)  
+
+**문제)**    
+min sup = 50%, min conf = 50% 일때, 모든 association rules X -> Y를 찾아라.  
+| Transaction-id | Items bought |
+| -------- | :------: |
+| 10 | A,B,D |
+| 20 | A,C,D |
+| 30 | A,D,E |
+| 40 | B,E,F |
+| 50 | B,C,D,E,F |   
+
+**1) Frequent pattern**   
+= min support 이상인 아이템셋,  
+symmetric : AD가 frequent pattern <=> DA가 frequent pattern     
+답 : { A:3, B:3, D:4, E:3, AD:3 }
+
+**2) Association rules**  
+답: 
+A -> D (sup: 60%, conf: 100%)  
+D -> A (sup: 60%, conf: 75%)  
   
 ## Efficient and scalable frequent itemset mining methods  
 
