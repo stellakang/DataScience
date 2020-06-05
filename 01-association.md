@@ -28,10 +28,10 @@ Semantic data compression
 
 ### 4. Concepts  
 **Association rule X -> Y**   
-**support** : probability that a transaction contains X U Y  
+- **support** : probability that a transaction contains X U Y  
 > (아이템셋 X와 Y를 모두 포함하는 트랜잭션의 수)/(전체 트랜잭션의 수)  
 
-**confidence** : conditional probability that a transaction having X also contains Y  
+- **confidence** : conditional probability that a transaction having X also contains Y  
 > (아이템셋 Y를 포함하는 트랜잭션의 수)/(X를 포함하는 트랜잭션의 수)  
 
 **문제)**    
@@ -45,16 +45,43 @@ min sup = 50%, min conf = 50% 일때, 모든 association rules X -> Y를 찾아�
 | 50 | B,C,D,E,F |   
 
 **1) Frequent pattern**   
-= min support 이상인 아이템셋,  
+= min support 이상인 아이템셋  
 symmetric : AD가 frequent pattern <=> DA가 frequent pattern     
+Downward closure property : Any subset of a frequent itemset must be frequent  
 답 : { A:3, B:3, D:4, E:3, AD:3 }
 
 **2) Association rules**  
 답: 
 A -> D (sup: 60%, conf: 100%)  
 D -> A (sup: 60%, conf: 75%)  
-  
+
+**Closed Patterns and Max Patterns**  
+Frequent pattern의 문제점 : sub pattern을 모두 고려해야 한다. **performance의 문제**  
+solution : Mine closed patterns and max patterns instead  
+- **Closed patterns**   
+itemset X is closed if  
+X is frequent and there exists no super-pattern Y with the same support as X    
+> frequent pattern 이고 같은 support값을 갖는 super pattern이 없음!!  
+
+- **Max-patterns**   
+itemset X is a max-pattern if  
+X is frequent and there exists no frequent super-pattern Y    
+> 더 늘릴게 없어!! frequent pattern 이고 frequent super pattern이 없음!!    
+
 ## Efficient and scalable frequent itemset mining methods  
+*Frequent pattern을 찾아내는 일반적인 방법 3가지!*  
+
+**1. Apriori**    
+> 후보 생성하고 테스트하는 과정 반복하면서 Frequent pattern을 찾아낸다.  
+단, 후보 생성시 subset이 frequent하지 않으면 생성 안함.  
+
+Apriori pruning principle : If there is any itemset which is infrequent, its superset should not be generated/tested!  
+
+
+**2. Frequent pattern growth (FPgrowth)**    
+
+**3. Vertical data format approach (Charm)**  
+
 
 ## Mining various kinds of association rules  
 
