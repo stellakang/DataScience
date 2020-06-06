@@ -110,36 +110,36 @@ c. 더 이상 frequent itemset이나 candidate이 생성되지 않을 때까지 
 **Challenges**  
 = Apriori 알고리즘 개선할 때 고려해야 할 점  
 - DB scan 많이 한다. == maximum frequent pattern length 만큼  
-- candidates 수가 많다.   
+- candidates 수가 많다. -> 100개 item의 경우 2^100-1개의 candidates, 100번 scan     
 - support counting 하는 데에 업무량 많다.  
 
 <br>  
 
 **Improving Apriori**   
-Q. sampling이랑 partition 둘다 scan 수 줄이는 것 맞는지..?  
+  
 <br>  
 
 **- Reduce the number of transaction database scans**   
 <br>  
 
-  a. Partition    
+  **a. Partition**    
      scan1 : DB를 k개로 나누면 각 local databases(=partition)에서 local minSup (=minSup/k)이 넘는 local frequent patterns 찾는다.  
      scan2 : local frequent patterns 이더라도 global frequent patterns는 아닐 수 있기 때문에 확인  
      이때, partition은 각각 메인메모리에 있음  
 <br>  
 
-  b. Sampling for Frequent Patterns  
-     <기존 sampling>  
-     **original database** -- sample --> **SDB** -- apriori --> **local frequent pattern**(minSup은 더 작은 값 사용)  
+  **b. Sampling for Frequent Patterns**    
+     **<기존 sampling>**  
+     original database -- sample --> SDB -- apriori --> local frequent pattern(minSup은 더 작은 값 사용)  
      문제점 : local frequent는 실제로 frequent patterns가 아닐 수 있고 전체 DB에서 frequent patterns가 빠졌을 수 있다.  
-     <보완한 sampling>   
+     **<보완한 sampling>**   
      **scan1** -> S, NB에서 frequent itemsets 찾기  
      S : local frequent pattern  
      NB : S에는 없지만, S에 모든 subsets가 있는 itemsets를 포함시킨다.(빠진 frequent pattern을 찾기 위해)  
      **scan2** -> NB에서 frequent itemset으로 포함되면서 frequent patterns가 될 수 있는 것들을 위함  
 <br>  
 
-  c. DIC  
+  **c. DIC**  
      같은 스캔에서 길이가 다른 itemsets가 후보로 들어있다.  
      a,d가 frequent이면 2-itemsets 탐색하기 시작, bcd의 모든 subsets가 frequent이면 bcd 탐색 시작  
 
@@ -158,6 +158,28 @@ Q. sampling이랑 partition 둘다 scan 수 줄이는 것 맞는지..?
 <br>  
 
 **2. Frequent pattern growth (FPgrowth)**    
+: Mining Frequent Patterns Without Candidate Generation  
+: FP-tree를 기반으로 한다.  
+<br>  
+
+순서  
+1) DB를 스캔하고, frequent 1-itemset 찾기  
+2) f-list 만들기 : frequent item의 frequency가 감소하는 순서대로 정렬  
+   F-list = f(4) - c(4) - a(3) - b(3) - m(3) - p(3)  
+3) DB를 다시 스캔해서 FP-tree 만들기  
+   root는 {}로 비워두고, 각 transaction 마다 frequent items를 정렬시켜 tree에 이어붙인다.    
+   이때, 이미 동일한 브랜치가 있으면 count를 증가시키고 없으면 브랜치를 새로 만든다. f:3 이런식으로 노드 표기  
+   frequent 1-item과 frequency가 적혀있는 header table에 시작점부터 존재하는 item까지 이어준다.  
+   
+<br>  
+장점       
+1) completeness = loseless information   
+   모든 frequent pattern 포함한다.  
+2) compactness = remove irrelevant info   
+   더 빈도가 높은 item일수록 공유하고 루트에 가깝게 위치   
+   절대 기존 데이터베이스보다 크지 않다.  
+<br>  
+
 
 <br>  
 
