@@ -29,10 +29,10 @@ Semantic data compression
 ### 4. Concepts  
 **Association rule X -> Y**   
 - **support** : probability that a transaction contains X U Y  
-> (아이템셋 X와 Y를 모두 포함하는 트랜잭션의 수)/(전체 트랜잭션의 수)  
+  > (아이템셋 X와 Y를 모두 포함하는 트랜잭션의 수)/(전체 트랜잭션의 수)  
 
 - **confidence** : conditional probability that a transaction having X also contains Y  
-> (아이템셋 Y를 포함하는 트랜잭션의 수)/(X를 포함하는 트랜잭션의 수)  
+  > (아이템셋 Y를 포함하는 트랜잭션의 수)/(X를 포함하는 트랜잭션의 수)  
 
 **문제)**    
 min sup = 50%, min conf = 50% 일때, 모든 association rules X -> Y를 찾아라.  
@@ -44,28 +44,29 @@ min sup = 50%, min conf = 50% 일때, 모든 association rules X -> Y를 찾아�
 | 40 | B,E,F |
 | 50 | B,C,D,E,F |   
 
-**1) Frequent pattern**   
+**문제-1) Frequent pattern**   
 = min support 이상인 아이템셋  
 symmetric : AD가 frequent pattern <=> DA가 frequent pattern     
 Downward closure property : Any subset of a frequent itemset must be frequent  
-답 : { A:3, B:3, D:4, E:3, AD:3 }
-
-**2) Association rules**  
-답: 
+답 : { A:3, B:3, D:4, E:3, AD:3 }  
+  
+**문제-2) Association rules**  
+답:   
 A -> D (sup: 60%, conf: 100%)  
 D -> A (sup: 60%, conf: 75%)  
 
 **Closed Patterns and Max Patterns**  
-Frequent pattern의 문제점 : sub pattern을 모두 고려해야 한다. **performance의 문제**  
-solution : Mine closed patterns and max patterns instead  
+FP 문제점 : sub pattern을 모두 고려해야 한다. -> **performance의 문제**  
+solution : Mine closed patterns and max patterns instead   
+
+
 - **Closed patterns**   
-itemset X is closed if  
-X is frequent and there exists no super-pattern Y with the same support as X    
-> frequent pattern 이고 같은 support값을 갖는 super pattern이 없음!!  
+itemset X is closed if X is frequent and there exists no super-pattern Y with the same support as X    
+> frequent pattern 이고 같은 support값을 갖는 super pattern이 없음!!   
+
 
 - **Max-patterns**   
-itemset X is a max-pattern if  
-X is frequent and there exists no frequent super-pattern Y    
+itemset X is a max-pattern if X is frequent and there exists no frequent super-pattern Y    
 > 더 늘릴게 없어!! frequent pattern 이고 frequent super pattern이 없음!!    
 
 ## Efficient and scalable frequent itemset mining methods  
@@ -77,6 +78,29 @@ X is frequent and there exists no frequent super-pattern Y
 
 Apriori pruning principle : If there is any itemset which is infrequent, its superset should not be generated/tested!  
 
+
+Method  
+- Initially, scan DB once to get frequent 1-itemset  
+- Generate candidate itemsets of length (k+1) from frequent itemsets of length k  
+- Test the candidates against DB  
+- Terminate when no frequent or candidate set can be generated  
+> a. k-itemset의 후보들 DB를 스캔 : k-itemset with min support -> frequent k-itemset   
+b. (k+1)-itemset의 후보 정하기 : sub itemset이 모두 frequent한 itemset     
+c. 더 이상 frequent itemset이나 candidate이 생성되지 않을 때까지 a,b 과정 반복   
+
+
+Issue  
+- generate candidates  
+  self-joining : abc, abd 로부터 abcd 생성  
+  pruning : acde는 L3에 ade가 없으니까 제거  
+- count supports of candidates  
+
+
+Challenges  
+= Apriori 알고리즘 개선할 때 고려해야 할 점  
+- DB scan 많이 한다. == maximum frequent pattern length 만큼  
+- candidates 수가 많다.   
+- support counting 하는 데에 업무량 많다.  
 
 **2. Frequent pattern growth (FPgrowth)**    
 
