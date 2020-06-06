@@ -67,12 +67,12 @@ solution : Mine closed patterns and max patterns instead
 
 - **Closed patterns**   
 itemset X is closed if X is frequent and there exists no super-pattern Y with the same support as X    
-> frequent pattern 이고 같은 support값을 갖는 super pattern이 없음!!   
+  > frequent pattern 이고 같은 support값을 갖는 super pattern이 없음!!   
 
 
 - **Max-patterns**   
 itemset X is a max-pattern if X is frequent and there exists no frequent super-pattern Y    
-> 더 늘릴게 없어!! frequent pattern 이고 frequent super pattern이 없음!!     
+  > 더 늘릴게 없어!! frequent pattern 이고 frequent super pattern이 없음!!     
                  
 <br><br>       
        
@@ -94,8 +94,8 @@ itemset X is a max-pattern if X is frequent and there exists no frequent super-p
 - Test the candidates against DB  
 - Terminate when no frequent or candidate set can be generated  
 > a. k-itemset의 후보들 DB를 스캔 : k-itemset with min support -> frequent k-itemset   
-b. (k+1)-itemset의 후보 정하기 : sub itemset이 모두 frequent한 itemset     
-c. 더 이상 frequent itemset이나 candidate이 생성되지 않을 때까지 a,b 과정 반복   
+  b. (k+1)-itemset의 후보 정하기 : sub itemset이 모두 frequent한 itemset     
+  c. 더 이상 frequent itemset이나 candidate이 생성되지 않을 때까지 a,b 과정 반복   
 
 <br>  
 
@@ -116,17 +116,13 @@ c. 더 이상 frequent itemset이나 candidate이 생성되지 않을 때까지 
 <br>  
 
 **Improving Apriori**   
-  
-<br>  
 
 **- Reduce the number of transaction database scans**   
-<br>  
 
   **a. Partition**    
      scan1 : DB를 k개로 나누면 각 local databases(=partition)에서 local minSup (=minSup/k)이 넘는 local frequent patterns 찾는다.  
      scan2 : local frequent patterns 이더라도 global frequent patterns는 아닐 수 있기 때문에 확인  
      이때, partition은 각각 메인메모리에 있음  
-<br>  
 
   **b. Sampling for Frequent Patterns**    
      **<기존 sampling>**  
@@ -137,21 +133,23 @@ c. 더 이상 frequent itemset이나 candidate이 생성되지 않을 때까지 
      S : local frequent pattern  
      NB : S에는 없지만, S에 모든 subsets가 있는 itemsets를 포함시킨다.(빠진 frequent pattern을 찾기 위해)  
      **scan2** -> NB에서 frequent itemset으로 포함되면서 frequent patterns가 될 수 있는 것들을 위함  
-<br>  
 
   **c. DIC**  
      같은 스캔에서 길이가 다른 itemsets가 후보로 들어있다.  
      a,d가 frequent이면 2-itemsets 탐색하기 시작, bcd의 모든 subsets가 frequent이면 bcd 탐색 시작  
-
+  
 <br>  
 
 **- Shrink the number of candidates**   
-  a. DHP  
+  
+  **a. DHP**   
      DB 스캔 한 번 할 때, k-itemsets의 support를 계산하는 동시에 (k+1)-itemsets를 위한 해시테이블을 만든다.  
      -> hash table의 각 row는 hash bucket을 의미하며 hash값이 같은 itemset끼리 같은 hash bucket에 위치하도록 count
      -> hash bucket count가 minSup보다 작으면 frequent pattern에서 제외  
      -> candidate를 줄이는데 효과적   
-     
+
+<br>    
+
 **- Facilitate support counting of candidates**     
 
 
@@ -170,15 +168,60 @@ c. 더 이상 frequent itemset이나 candidate이 생성되지 않을 때까지 
    root는 {}로 비워두고, 각 transaction 마다 frequent items를 정렬시켜 tree에 이어붙인다.    
    이때, 이미 동일한 브랜치가 있으면 count를 증가시키고 없으면 브랜치를 새로 만든다. f:3 이런식으로 노드 표기  
    frequent 1-item과 frequency가 적혀있는 header table에 시작점부터 존재하는 item까지 이어준다.  
+4) Pattern을 나누어 생각해보자.    
+   F-list = f-c-a-b-m-p 인 경우, 아래와 같이 나눌 수 있다.    
+   Patterns containing p, Patterns having m but no p, Patterns having b but no m,p ..., Patterns having f  
+5) 각 아이템마다 conditional pattern base를 구한다.     
+   a. frequent item header table에서 p의 링크를 따라간다.  
+   b. p의 prefix path를 모두 이어서 p's conditional pattern base 표를 만든다.  
+   
+**Header Table**  
+| Item | frequency | head |
+| ----- | :------: | -- |
+| f | 4 ||
+| c | 4 ||
+| a | 3 ||
+| b | 3 ||
+| m | 3 ||   
+| p | 3 ||  
+
+**Conditional pattern bases**  
+| item | cond. pattern base |
+| ----- | ----------- |
+| c | f:3 |
+| a | fc:3 |
+| b | fca:1, f:1, c:1 |
+| m | fca:2, fcab:1 |   
+| p | fcam:2, cb:1 |
+
+6) Conditional pattern base에서 Conditional FP-tree 만들기   
+   예를 들어, p의 모든 conditional pattern base를 합쳐서 minSup가 넘는 items에 대해 p-conditional FP-tree를 만든다.  
+   
+   
+   Conditional FP-tree에서 모든 frequent itemsets 구하기     
+   예를 들어, f(3)-c(3)-a(3)이 m-conditional FP-tree 이면     
+   -> fm, cm, am, fam, cam, fcm, fcam  
+   만약, conditional FP-tree에 single prefix path가 있으면 single 부분과 아닌 부분으로 나누어서 각각 구한 후, 붙인다.
+   
+   이 과정을 빈도수가 낮은 아이템부터 conditional FP-tree를 생성해나가다가  
+   FP-tree가 비어있거나, single path만 포함할 때까지 진행한다.  
+   
+   
+     
    
 <br>  
-장점       
-1) completeness = loseless information   
+
+장점  
+
+1) completeness = loseless information  
    모든 frequent pattern 포함한다.  
-2) compactness = remove irrelevant info   
-   더 빈도가 높은 item일수록 공유하고 루트에 가깝게 위치   
+   
+2) compactness = remove irrelevant info  
+   더 빈도가 높은 item일수록 공유하고 루트에 가깝게 위치  
    절대 기존 데이터베이스보다 크지 않다.  
+   
 <br>  
+
 
 
 <br>  
