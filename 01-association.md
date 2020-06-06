@@ -116,17 +116,43 @@ c. 더 이상 frequent itemset이나 candidate이 생성되지 않을 때까지 
 <br>  
 
 **Improving Apriori**   
-- Reduce the number of transaction database scans     
-  a. Partition  
-  
-  b. Sampling for Frequent Patterns  
-  
-  c. DIC  
+Q. sampling이랑 partition 둘다 scan 수 줄이는 것 맞는지..?  
+<br>  
 
-- Shrink the number of candidates   
+**- Reduce the number of transaction database scans**   
+<br>  
+
+  a. Partition    
+     scan1 : DB를 k개로 나누면 각 local databases(=partition)에서 local minSup (=minSup/k)이 넘는 local frequent patterns 찾는다.  
+     scan2 : local frequent patterns 이더라도 global frequent patterns는 아닐 수 있기 때문에 확인  
+     이때, partition은 각각 메인메모리에 있음  
+<br>  
+
+  b. Sampling for Frequent Patterns  
+     <기존 sampling>  
+     **original database** -- sample --> **SDB** -- apriori --> **local frequent pattern**(minSup은 더 작은 값 사용)  
+     문제점 : local frequent는 실제로 frequent patterns가 아닐 수 있고 전체 DB에서 frequent patterns가 빠졌을 수 있다.  
+     <보완한 sampling>   
+     **scan1** -> S, NB에서 frequent itemsets 찾기  
+     S : local frequent pattern  
+     NB : S에는 없지만, S에 모든 subsets가 있는 itemsets를 포함시킨다.(빠진 frequent pattern을 찾기 위해)  
+     **scan2** -> NB에서 frequent itemset으로 포함되면서 frequent patterns가 될 수 있는 것들을 위함  
+<br>  
+
+  c. DIC  
+     같은 스캔에서 길이가 다른 itemsets가 후보로 들어있다.  
+     a,d가 frequent이면 2-itemsets 탐색하기 시작, bcd의 모든 subsets가 frequent이면 bcd 탐색 시작  
+
+<br>  
+
+**- Shrink the number of candidates**   
   a. DHP  
-  
-- Facilitate support counting of candidates :   
+     DB 스캔 한 번 할 때, k-itemsets의 support를 계산하는 동시에 (k+1)-itemsets를 위한 해시테이블을 만든다.  
+     -> hash table의 각 row는 hash bucket을 의미하며 hash값이 같은 itemset끼리 같은 hash bucket에 위치하도록 count
+     -> hash bucket count가 minSup보다 작으면 frequent pattern에서 제외  
+     -> candidate를 줄이는데 효과적   
+     
+**- Facilitate support counting of candidates**     
 
 
 <br>  
