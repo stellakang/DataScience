@@ -296,13 +296,13 @@ milk => wheat bread (support=8%, confidence=70%)
 ### 2. Mining multidimensional association   
 <br>  
 
-**- Single-dimensional rules**  
+- **Single-dimensional rules**  
 : having 1 dimension or 1 predicate  
 buys(X, "milk") => buys(X, "bread") *buys 하나만 씀*   
 
 
 
-**- Multi-dimensional rules**  
+- **Multi-dimensional rules**  
 : having >=2 dimensions or predicates   
 
 + inter-dimension association rules  *반복되지않는 predicates*   
@@ -442,10 +442,8 @@ Constrained Mining vs Other Operations
 - Succinctness  
 : itemset A1이 constraint C를 만족하면, C를 만족하는 어떤 집합 S는 A1에 기반해서 간단히 구해질 수 있다.  
 => 어떤 특정 아이템으로 C constraint를 만족한다.  
-장점  
-: transaction database를 보지 않아도 itemset S가 어떤 item들을 선택했는지에 따라 constraint C를 만족하는지를 결정할 수 있다.  
-Optimization  
-: 만약 C가 succinct하면 C는 pre-counting pushable 하다.  
+**장점** transaction database를 보지 않아도 itemset S가 어떤 item들을 선택했는지에 따라 constraint C를 만족하는지를 결정할 수 있다.  
+**Optimization** 만약 C가 succinct하면 C는 pre-counting pushable 하다.  
 -> candidate-generation time에 basic elements가 포함되어있는지만 확인하면 해당 constraint를 만족하는지 확인할 수 있기 때문.   
   > ex. min(S.Price)<=v is succinct  
         sum(S.Price)>=v is not succinct  
