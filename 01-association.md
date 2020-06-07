@@ -91,7 +91,7 @@ itemset X is a max-pattern if X is frequent and there exists no frequent super-p
 *Frequent pattern을 찾아내는 일반적인 방법 3가지!*  
 <br>  
 
-**1. Apriori**    
+### 1. Apriori     
 > 후보 생성하고 테스트하는 과정 반복하면서 Frequent pattern을 찾아낸다.  
 단, 후보 생성시 subset이 frequent하지 않으면 생성 안함.  
 
@@ -170,7 +170,7 @@ itemset X is a max-pattern if X is frequent and there exists no frequent super-p
 
 <br>  
 
-**2. Frequent pattern growth (FPgrowth)**    
+### 2. Frequent pattern growth (FPgrowth)      
 : Mining Frequent Patterns Without Candidate Generation  
 : FP-tree를 기반으로 한다.  
 <br>  
@@ -247,7 +247,7 @@ Why?
 
 <br>  
 
-**3. Vertical data format approach (Charm)**   
+### 3. Vertical data format approach (Charm)     
 vertical format : transaction마다 등장하는 itemset을 나열한 horizontal format과 달리 itemset마다 transaction id를 나열하는 형태   
 t(AB) = {T11, T25, ...}  
 <br>  
@@ -267,6 +267,36 @@ A,B가 frequent하고 t(A) = {T1, T2, T3, ...} 이고, t(B) = {T1, T3, T4, ...}�
 <br><br>  
 
 ## Mining various kinds of association rules  
+<br>  
+
+### 1. Mining multilevel association  
+: items가 계층(level)을 형성하는 경우! 계층이 낮을 수록 낮은 support value를 사용하는 것이 좋다.  
+: 다른 계층임에도 같은 support를 사용하는 경우, 계층이 낮을수록 association rule에 포함되기 힘들어지고, 계층이 높을수록 association rule에 포함되기 쉽다.  
+<br>  
+
+ex) Milk(minSup=5%), 2% Milk(minSup=3%), skimmed Milk(minSup=3%)  
+<br>    
+  
+**Redundancy Filtering**  
+: ancestor가 이미 그 rule를 나타내기 때문에 descendent rule은 불필요하다.  
+
+
+milk => wheat bread (support=8%, confidence=70%)  
+2% milk => wheat bread (support=2%, confidence=72%)  
+
+
+
+-> 첫번째 룰은 두번째 룰의 ancestor  
+-> descendent rule은  
+  descendent의 support가 ancestor의 support값과 비교하여 기대하는 값과 비슷할 때,  
+  descendent의 confidence값이 ancestor의 confidence 와 비슷할 때,  
+  'redundant' 하다. 
+<br>  
+
+
+### 2. Mining multidimensional association  
+### 3. Mining quantitative association  
+### 4. Mining interesting correlation patterns  
 
 <br><br>  
 
