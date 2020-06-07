@@ -377,7 +377,7 @@ X는 itemset이고, X 중에서 가장 support가 큰 값을 가진 item의 supp
 
 <br><br>
 ## Constraint-based association mining  
-*database에 있는 모든 pattern을 찾는 것은 비현실적! 사용자가 원하는 방향으로 mining을 진행할 수 있어야 한다.  
+*database에 있는 모든 pattern을 찾는 것은 비현실적! 사용자가 원하는 방향으로 mining을 진행할 수 있어야 한다.*    
 
 
 ### 1. Concept  
@@ -427,33 +427,28 @@ Constrained Mining vs Other Operations
 
 - Anti-Monotonicity  
 : itemset S가 constraint에 성립하지 않으면 S의 superset도 constraint에 성립하지 않는다.  
-
-> ex. sum(S.Price)<=v is anti-monotone  
-      sum(S.Price)>=v is non anti-monotone  
-      range(S.profit)<=15 is anti-monotone  
+  > ex. sum(S.Price)<=v is anti-monotone  
+        sum(S.Price)>=v is non anti-monotone  
+        range(S.profit)<=15 is anti-monotone  
   
   
 - Monotonicity  
 : itemset S가 constraint에 성립하면 S의 superset도 constraint에 성립한다.  
-
-> ex. sum(S.Price)>=v is monotone  
-      min(S.Price)<=v is monotone  
-      range(S.profit)>=15 is monotone  
+  > ex. sum(S.Price)>=v is monotone  
+        min(S.Price)<=v is monotone  
+        range(S.profit)>=15 is monotone  
 
 
 - Succinctness  
 : itemset A1이 constraint C를 만족하면, C를 만족하는 어떤 집합 S는 A1에 기반해서 간단히 구해질 수 있다.  
 => 어떤 특정 아이템으로 C constraint를 만족한다.  
-
-
-장점 : transaction database를 보지 않아도 itemset S가 어떤 item들을 선택했는지에 따라 constraint C를 만족하는지를 결정할 수 있다.  
-
-
-Optimization : 만약 C가 succinct하면 C는 pre-counting pushable 하다.  
+장점  
+: transaction database를 보지 않아도 itemset S가 어떤 item들을 선택했는지에 따라 constraint C를 만족하는지를 결정할 수 있다.  
+Optimization  
+: 만약 C가 succinct하면 C는 pre-counting pushable 하다.  
 -> candidate-generation time에 basic elements가 포함되어있는지만 확인하면 해당 constraint를 만족하는지 확인할 수 있기 때문.   
-
-> ex. min(S.Price)<=v is succinct  
-      sum(S.Price)>=v is not succinct  
+  > ex. min(S.Price)<=v is succinct  
+        sum(S.Price)>=v is not succinct  
       
 ### 5. Converting "Tough" Constraints  
 : tough constraints를 anti-monotone이나 monotone으로 바꾼다.  
