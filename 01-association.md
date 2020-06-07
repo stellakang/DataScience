@@ -377,4 +377,109 @@ X는 itemset이고, X 중에서 가장 support가 큰 값을 가진 item의 supp
 
 <br><br>
 ## Constraint-based association mining  
+*database에 있는 모든 pattern을 찾는 것은 비현실적! 사용자가 원하는 방향으로 mining을 진행할 수 있어야 한다.  
+
+
+### 1. Concept  
+
+
+Constraint-based mining은  
+- User flexibility : 무엇을 mining 할지 constraints를 준다.  
+- System optimization : 효과적으로 mining 하기 위해서 constraints를 파악한다.  
+
+Constrained Mining vs Other Operations
+  
+
+### 2. Constraints in Data Mining    
+
+
+- Knowledge type constraint  
+  : 내가 원하는 것이 분류일 수도 있고, 클러스터링 일수도 있고 등등 원하는 것을 limit한다.  
+  classification, association, clustering etc.  
+  
+- Data constraint  
+  : sql과 비슷한 쿼리 사용   
+  상점에서 함께 팔린 물건의 쌍을 찾아라와 같이.  
+ 
+- Dimension/level constraint  
+  : attribute 과 관련된 개념!  
+  모든 애트리뷰트를 고려하는 것이 아니라 몇 개만 고려  
+  -> region, price, brand, customer category  
+  
+- Interestingness constraint  
+  : association rule mining 에서 배움  
+  min support, min confidence에 대한 constraint 제시  
+  
+
+### 3. Constrained Mining vs Other Operations  
+
+**Constrained Mining vs Constrained-based search  
+
+- 공통점 : search space를 줄이는 목적  
+- 차이점 : 전자는 constraints를 만족하는 모든 패턴을 찾고, 후자는 constraints를 만족하는 답을 찾기만 하면 된다.  
+
+
+**Constrained Mining vs query processing in DBMS  
+
+- 공통점 : 해당 조건에 맞는 모든 답을 찾는것(전자는 patterns, 후자는 tuples)  
+
+### 4. Constraint Pushing  
+
+- Anti-Monotonicity  
+: itemset S가 constraint에 성립하지 않으면 S의 superset도 constraint에 성립하지 않는다.  
+
+> ex. sum(S.Price)<=v is anti-monotone  
+      sum(S.Price)>=v is non anti-monotone  
+      range(S.profit)<=15 is anti-monotone  
+  
+  
+- Monotonicity  
+: itemset S가 constraint에 성립하면 S의 superset도 constraint에 성립한다.  
+
+> ex. sum(S.Price)>=v is monotone  
+      min(S.Price)<=v is monotone  
+      range(S.profit)>=15 is monotone  
+
+
+- Succinctness  
+: itemset A1이 constraint C를 만족하면, C를 만족하는 어떤 집합 S는 A1에 기반해서 간단히 구해질 수 있다.  
+=> 어떤 특정 아이템으로 C constraint를 만족한다.  
+
+
+장점 : transaction database를 보지 않아도 itemset S가 어떤 item들을 선택했는지에 따라 constraint C를 만족하는지를 결정할 수 있다.  
+
+
+Optimization : 만약 C가 succinct하면 C는 pre-counting pushable 하다.  
+-> candidate-generation time에 basic elements가 포함되어있는지만 확인하면 해당 constraint를 만족하는지 확인할 수 있기 때문.   
+
+> ex. min(S.Price)<=v is succinct  
+      sum(S.Price)>=v is not succinct  
+      
+### 5. Converting "Tough" Constraints  
+: tough constraints를 anti-monotone이나 monotone으로 바꾼다.  
+
+> ex. avg(S.profit)>=25  
+
+아이템을 감소하는 순서대로 정렬하면 superset은 뒤에 있는 더 작은 item이 들어오도록 하면,  
+해당 식은 anti-monotone 으로 바뀐다.  
+
+
+<br>  
+
+## Summary  
+
+- Frequent pattern mining - an important task in data mining  
+
+- Scalable frequent pattern mining methods  
+  > Apriori(Candidate generation & test)  
+    Projection-based(FPgrowth, CLOSET+, ...)  
+    Vertical format approach(CHARM, ...)  
+    
+- Mining a variety of rules and interesting patterns  
+
+- Constraint-based mining  
+ 
+- Extensions and applications  
+      
+
 
