@@ -272,9 +272,8 @@ A,B가 frequent하고 t(A) = {T1, T2, T3, ...} 이고, t(B) = {T1, T3, T4, ...}�
 ### 1. Mining multilevel association  
 : items가 계층(level)을 형성하는 경우! 계층이 낮을 수록 낮은 support value를 사용하는 것이 좋다.  
 : 다른 계층임에도 같은 support를 사용하는 경우, 계층이 낮을수록 association rule에 포함되기 힘들어지고, 계층이 높을수록 association rule에 포함되기 쉽다.  
-<br>  
-
 ex) Milk(minSup=5%), 2% Milk(minSup=3%), skimmed Milk(minSup=3%)  
+
 <br>    
   
 **Redundancy Filtering**  
@@ -294,9 +293,58 @@ milk => wheat bread (support=8%, confidence=70%)
 <br>  
 
 
-### 2. Mining multidimensional association  
+### 2. Mining multidimensional association   
+<br>  
+
+**- Single-dimensional rules**  
+: having 1 dimension or 1 predicate  
+buys(X, "milk") => buys(X, "bread") *buys 하나만 씀*   
+
+
+
+**- Multi-dimensional rules**  
+: having >=2 dimensions or predicates   
+
++ inter-dimension association rules  *반복되지않는 predicates*   
+  age(X, "19-25") ^ occupation(X, "student") => buys(X, "coke")   
+  
++ hybrid-dimension association rules *반복되는 predicates*   
+  age(X, "19-25") ^ buys(X, "popcorn") => buys(X, "coke")   
+  
+<br>  
+
 ### 3. Mining quantitative association  
+
+<br>  
+
+**Attribute Types**   
+ "19-25", "popcorn", "coke" => attributes의 value  
+ 
+
+ - Categorical Attributes  
+   -> value가 유한하고 value 사이에 순서가 없다.    
+ - Quantitative Attributes  
+   -> 수치이며 value 사이에 암시된 순서가 있다.    
+   -> 이산화하거나 클러스터링 작업이 필요  
+
+**Techniques**  
+> numerical attributes를 다루는 방법  
+
+- Static discretization based on predefined concept hierarchies   
+  : data cube methods  
+  -> numeric values는 range로 바꾼다.  
+  -> k-predicate sets는 k,k+1의 table scan이 필요하다.  
+     3개의 predicate이 있는 경우 3,4번 스캔 
+  
+- Dynamic discretization based on data distribution  
+  : quantitative rules  
+  
+- Clustering  
+  : distance-based association  
+  
+
 ### 4. Mining interesting correlation patterns  
+언급 안 함.  
 
 <br><br>  
 
