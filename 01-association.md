@@ -338,6 +338,10 @@ buys(X, "milk") => buys(X, "bread") *buys 하나만 씀*
   
 - Dynamic discretization based on data distribution  
   : quantitative rules  
+  인접한 association rule을 함쳐서 나타낸다. -> 30-40, 40-50을 합쳐서 동적으로 30-50으로.    
+  예를 들어, 2D grid를 이용하여 association rule을 만들어보면 2D quantitative association rule은 아래와 같다.   
+  A quan1 ^ A quan2 => A cat  
+  -> confidence, support가 threshold보다 높아야 한다.  
   
 - Clustering  
   : distance-based association  
@@ -348,7 +352,28 @@ buys(X, "milk") => buys(X, "bread") *buys 하나만 씀*
 
 <br><br>  
 
-## From association mining to correlation analysis  
+## From association mining to correlation analysis   
+기존 support, confidence는 상관관계를 나타내는 데에 좋은 measure가 아니다.  
+예를 들어, 85%의 손님이 milk를 산다면 아래 문장은 오해의 소지가 있다.   
+> buy walnuts => buy milk (sup=1%, conf=80%)  
+conf는 walnuts를 산 사람이 milk를 살 확률인데, 80% < 85% 이면, 오히려 적게 사는 것.  
+
+<br>  
+
+따라서, correlation을 잘 드러낼 수 있는 또 다른 Measure는 무엇일까?  
+아래 3가지의 값이 클수록 서로 연관성이 높은 것.  
+
+
+### 1. lift  
+lift = P(AUB)/P(A)P(B)  
+
+### 2. Cosine  
+Cosine = P(AUB)/root(P(A)P(B))  
+lift와 비교 : total number of transaction이 동일하게 분모와 분자의 분모에 위치하게 된다. => total number of transaction에 독립  
+
+### 3. all_conf  
+all_conf = sup(X)/max_item_sup(X)  
+X는 itemset이고, X 중에서 가장 support가 큰 값을 가진 item의 support 값이 분모   
 
 <br><br>
 ## Constraint-based association mining  
