@@ -69,11 +69,22 @@ solution : Mine closed patterns and max patterns instead
 itemset X is closed if X is frequent and there exists no super-pattern Y with the same support as X    
   > frequent pattern 이고 같은 support값을 갖는 super pattern이 없음!!   
 
-
+  CLOSET : Mining Closed Patterns   
+  원래는 frequent itmes를 다 구하고, superset의 support가 같은 frequent itemset은 지우는 방식이지만 너무 오래걸림.  
+  **FP-tree 이용** : FP-tree에서 d를 가진 transaction은 cfa를 가지므로 cfad는 frequent closed pattern이다.    
+  
 - **Max-patterns**   
 itemset X is a max-pattern if X is frequent and there exists no frequent super-pattern Y    
   > 더 늘릴게 없어!! frequent pattern 이고 frequent super pattern이 없음!!     
-                 
+  
+  MaxMiner : Mining Max-patterns  
+  **apriori를 기반**으로 하되, max pattern만 효과적으로 구하기 위한 방법  
+  set-enumeration tree를 이용하여 pruning하면서 진행  
+  1st scan -> frequent items찾고 증가하는 순으로 정렬    
+  2nd scan -> 2-itemsets와 potential max-patterns의 support구하기  
+  => BCDE가 max pattern이면 subsets 역시 frequent하니까 구할 필요 없음.  
+  => AC가 infrequent하면 ABC는 볼 필요 없음.  
+                
 <br><br>       
        
 ## Efficient and scalable frequent itemset mining methods   
@@ -124,15 +135,19 @@ itemset X is a max-pattern if X is frequent and there exists no frequent super-p
      scan2 : local frequent patterns 이더라도 global frequent patterns는 아닐 수 있기 때문에 확인  
      이때, partition은 각각 메인메모리에 있음  
 
-  **b. Sampling for Frequent Patterns**    
-     **<기존 sampling>**  
-     original database -- sample --> SDB -- apriori --> local frequent pattern(minSup은 더 작은 값 사용)  
-     문제점 : local frequent는 실제로 frequent patterns가 아닐 수 있고 전체 DB에서 frequent patterns가 빠졌을 수 있다.  
-     **<보완한 sampling>**   
-     **scan1** -> S, NB에서 frequent itemsets 찾기  
-     S : local frequent pattern  
-     NB : S에는 없지만, S에 모든 subsets가 있는 itemsets를 포함시킨다.(빠진 frequent pattern을 찾기 위해)  
-     **scan2** -> NB에서 frequent itemset으로 포함되면서 frequent patterns가 될 수 있는 것들을 위함  
+  **b. Sampling for Frequent Patterns**     
+  
+  
+  **<기존 sampling>**  
+  original database -- sample --> SDB -- apriori --> local frequent pattern(minSup은 더 작은 값 사용)  
+  문제점 : local frequent는 실제로 frequent patterns가 아닐 수 있고 전체 DB에서 frequent patterns가 빠졌을 수 있다.   
+  
+  
+  **<보완한 sampling>**   
+  **scan1** -> S, NB에서 frequent itemsets 찾기  
+  S : local frequent pattern  
+  NB : S에는 없지만, S에 모든 subsets가 있는 itemsets를 포함시킨다.(빠진 frequent pattern을 찾기 위해)  
+  **scan2** -> NB에서 frequent itemset으로 포함되면서 frequent patterns가 될 수 있는 것들을 위함  
 
   **c. DIC**  
      같은 스캔에서 길이가 다른 itemsets가 후보로 들어있다.  
@@ -160,7 +175,7 @@ itemset X is a max-pattern if X is frequent and there exists no frequent super-p
 : FP-tree를 기반으로 한다.  
 <br>  
 
-순서  
+   **순서**  
 1) DB를 스캔하고, frequent 1-itemset 찾기  
 2) f-list 만들기 : frequent item의 frequency가 감소하는 순서대로 정렬  
    F-list = f(4) - c(4) - a(3) - b(3) - m(3) - p(3)  
@@ -204,14 +219,11 @@ itemset X is a max-pattern if X is frequent and there exists no frequent super-p
    만약, conditional FP-tree에 single prefix path가 있으면 single 부분과 아닌 부분으로 나누어서 각각 구한 후, 붙인다.
    
    이 과정을 빈도수가 낮은 아이템부터 conditional FP-tree를 생성해나가다가  
-   FP-tree가 비어있거나, single path만 포함할 때까지 진행한다.  
-   
-   
-     
+   FP-tree가 비어있거나, single path만 포함할 때까지 진행한다.       
    
 <br>  
 
-장점  
+**장점**  
 
 1) completeness = loseless information  
    모든 frequent pattern 포함한다.  
@@ -222,11 +234,35 @@ itemset X is a max-pattern if X is frequent and there exists no frequent super-p
    
 <br>  
 
-
+**FP-growth가 Apriori보다 빠르다.**  
+Why?  
+- Divide and conquer : 전체를 disjoint한 부분으로 나눈다.  
+- candidate generation이 없다.    
+- compressed database : FP-tree structure  
+- 데이터베이스 스캔 2번     
+  1st scan : to find 1 frequent itemset  
+  2nd scan : to construct FP-tree
+- 기본적인 연산  
+  local frequent items 세고, sub FP-tree 생성하는 것  
 
 <br>  
 
-**3. Vertical data format approach (Charm)**  
+**3. Vertical data format approach (Charm)**   
+vertical format : transaction마다 등장하는 itemset을 나열한 horizontal format과 달리 itemset마다 transaction id를 나열하는 형태   
+t(AB) = {T11, T25, ...}  
+<br>  
+
+**순서**  
+1) horizontal -> vertical format으로 바꾸기 위해 dataset을 scan한다.(item 수가 transaction수보다 적기 때문에 쉽다. )    
+2) k=1 부터 frequent k-itemsets로 부터 (k+1)-itemsets의 후보를 만든다.(tid-sets끼리 intersection하고, apriori 알고리즘 이용)  
+A,B가 frequent하고 t(A) = {T1, T2, T3, ...} 이고, t(B) = {T1, T3, T4, ...}이면 t(AB) = {T1, T3, ...} 이 되고 minSup가 넘으면 (k+1)-itemsets에 포함된다.  
+3) frequent itemsets이 없을 때까지 반복한다.  
+<br>  
+
+**장점**  
+* (k+1)-itemsets의 support를 계산하기 위해 database를 스캔하지 않아도 된다.  
+   하지만 intersection에 많은 시간과 공간이 필요하다. 
+   -> diffset technique를 이용한다. 두 아이템셋이 등장하는 transaction id를 비교하여 차집합만 저장  
 
 <br><br>  
 
