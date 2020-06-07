@@ -413,13 +413,13 @@ Constrained Mining vs Other Operations
 
 ### 3. Constrained Mining vs Other Operations  
 
-**Constrained Mining vs Constrained-based search  
+**Constrained Mining vs Constrained-based search**    
 
 - 공통점 : search space를 줄이는 목적  
 - 차이점 : 전자는 constraints를 만족하는 모든 패턴을 찾고, 후자는 constraints를 만족하는 답을 찾기만 하면 된다.  
 
 
-**Constrained Mining vs query processing in DBMS  
+**Constrained Mining vs query processing in DBMS**    
 
 - 공통점 : 해당 조건에 맞는 모든 답을 찾는것(전자는 patterns, 후자는 tuples)  
 
