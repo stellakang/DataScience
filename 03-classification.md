@@ -3,10 +3,25 @@
 ## Data Mining Introduction  
 
 ### 1. Why Data Mining  
-- Whay Data Mining  
+- Why Data Mining  
+  : 데이터가 굉장히 많기 때문에 그 데이터 안에서 필요한 knowledge를 가져오는 것이 중요  
+  
+  
 - Evolution of Sciences  
+  **empirical science**(~1600): 실험 등을 통해 무언가를 찾아내는 '경험과학'  
+  **theoretical science**(1600-1950): 이론이 중요하며 이를 통해 다른 실험을 이끌어낸다.  
+  **computational science**(1950-1990): 시뮬레이션을 의미하며 이를 통해 많은 시간을 절약할 수 있다.  
+  **data science**(1990-now): 많은 데이터가 등장하면서 이를 잘 관리하고 저장하며 새로운 정보를 얻는 것이 중요해졌다.  
+  cf. big data era는 두가지 관점으로 이해 가능  
+  : 1. database perspective - scalability, 2. data science perspective - real world 이해하는데 도움된다.   
+  
+  
 - Evolution of Database Technology  
-
+  **1960s** : 데이터가 없으니 '데이터 수집', '데이터베이스 생성', IMS and network DBMS  
+  **1970s** : 관계형 데이터 모델, 관계형 DBMS 구현  
+  **1980s** : 관계형 데이터 베이스에서 확장된 관계형 DBMS, 응용 중심 DBMS        
+  **1990s** : 데이터 마이닝의 필요성이 생겨나고 data warehousing 등장      
+  **2000s** : 데이터 마이닝과 응용  
 
 ### 2. What Is Data Mining  
 
