@@ -24,21 +24,75 @@
   **2000s** : 데이터 마이닝과 응용  
 
 ### 2. What Is Data Mining  
+= knowledge discovery from data  
+
+
+Extraction of interesting(= non-trivial, implicit, previously unknown, potentially useful)  
+patterns or knowledge from huge amount of data.  
+> 많은 데이터 안에서 '중요하고 내포되어있고 알려지지 않았고 잠재적으로 유용한' 패턴이나 지식을 추출하는 것  
+  단순한 탐색 같은 것은 데이터 마이닝이 아니다.  
+  
+  
+Alternative names: knowledge discovery in databases(kdd), ...  
 
 
 
-### 3. Data Mining : On what kind of data?  
+### 3. Knowledge Discovery Process  
+
+**Databases**-(1)-**Data Warehouse**-(2)-**Task-relevant Data**-(3)-**Pattern Evaluation** - **Knowledge**  
+
+(1) Data Integration & Data Cleaning  
+Data Integration : 데이터베이스를 통합한다. -> Data warehouse(데이터베이스들의 데이터베이스, 데이터베이스의 스냅샷과 같음, non dynamic)  
+Data Cleaning : data mining의 질을 높이기 위해 noise, missing data(inconsistency) 문제를 해결한다.   
+
+(2) Selection  
+Data warehouse에서 해당 작업과 관련된 데이터를 선택한다.  
+데이터 마이닝은 일반적으로 data warehouse의 모두 사용하지 않는다.  
+
+(3) Data Mining  
+데이터 마이닝을 거쳐서 나온 것 중에서 pattern evaluation을 통해 몇 가지의 pattern을 고른다.  
+
+### 4. Data mining and Business Intelligence  
+위에 있을수록 높은 상위 계층  
+|   계층   | 관련 유저 |  
+| :-----: | :-----: |  
+|**Decision Making**|End User|
+|**Data Presentation**<br>*Visualization Techniques*|Business Analyst|  
+|**Data Mining**<br>*Information Discovery*|Data Analyst|
+|**Data Exploration**<br>*Querying, Reporting*||
+|**Data Preprocessing/Integration, Data Warehouses**||
+|**Data sources**|DBA|
+
+### 5. Data Mining: Classification schemes  
+Why not Traditional Data Analysis?  
+: 전통적 통계학 - 단순한 상황에서는 잘 작동  
+  매우 많은 양의 데이터, 고차원의 데이터, 복잡한 데이터, 새롭고 정교한 애플리케이션이기 때문  
+
+- 데이터 마이닝 : classification schemes   
+  1) Descriptive data mining : 현재 데이터에 대해 기술  
+  2) Predictive data mining : 새로운 데이터에 대한 예측   
+
+- classification과 관련된 4가지 view  
+  Data view : mining할 데이터 관점 (Data to be mined)  
+  Knowledge view : 탐색할 knowledge 관점 (Knowledge to be mined)  
+  Method view : 활용할 technique 관점 (Techniques utilized)   
+  Application view : 적용할 application 관점 (Applications adapted)  
+  
 
 
-### 4. Data mining functionality   
+  
 
-### 5. Classification of data mining systems  
+### 6. Data mining functionality   
 
-### 6. Top-10 most popular data mining algorithms  
 
-### 7. Major issues in data mining  
 
-### 8. Summary  
+### 7. Classification of data mining systems  
+
+### 8. Top-10 most popular data mining algorithms  
+
+### 9. Major issues in data mining  
+
+### 10. Summary  
 
 *Classification and Prediction*  
 
