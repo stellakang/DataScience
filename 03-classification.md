@@ -36,6 +36,11 @@ patterns or knowledge from huge amount of data.
 Alternative names: knowledge discovery in databases(kdd), ...  
 
 
+Why not Traditional Data Analysis?  
+: 전통적 통계학 - 단순한 상황에서는 잘 작동  
+  매우 많은 양의 데이터, 고차원의 데이터, 복잡한 데이터, 새롭고 정교한 애플리케이션이기 때문  
+
+
 
 ### 3. Knowledge Discovery Process  
 
@@ -64,37 +69,50 @@ Data warehouse에서 해당 작업과 관련된 데이터를 선택한다.
 |**Data sources**|DBA|
 
 ### 5. Data Mining: Classification schemes  
-Why not Traditional Data Analysis?  
-: 전통적 통계학 - 단순한 상황에서는 잘 작동  
-  매우 많은 양의 데이터, 고차원의 데이터, 복잡한 데이터, 새롭고 정교한 애플리케이션이기 때문  
-
+  
 - 데이터 마이닝 : classification schemes   
   1) Descriptive data mining : 현재 데이터에 대해 기술  
   2) Predictive data mining : 새로운 데이터에 대한 예측   
 
-- classification과 관련된 4가지 view  
+- Classification과 관련된 4가지 view  
   Data view : mining할 데이터 관점 (Data to be mined)  
+  --> Data for mining: 데이터베이스 중심 데이터 집합(관계형 데이터베이스, 데이터웨어하우스, 트랜잭션 데이터베이스)/ advanced datasets and applications    
+  
+      
   Knowledge view : 탐색할 knowledge 관점 (Knowledge to be mined)  
   Method view : 활용할 technique 관점 (Techniques utilized)   
   Application view : 적용할 application 관점 (Applications adapted)  
   
 
 
-  
-
 ### 6. Data mining functionality   
 
+- Multidimensional concept description: Characterization and discrimination    
+  많은 튜플을 몇 개로 줄여서 요약하고 튜플끼리 비교  
+  
+
+- Frequent patterns, association, correlation vs causality  
+
+- Classification and Prediction  
+
+- Cluster analysis  
+  class label이 알려져있지 않음  
+
+- Outlier analysis  
+
+- Trend and evolution analysis  
 
 
-### 7. Classification of data mining systems  
+### 7. Top-10 most popular data mining algorithms  
+18 identified candidates  
+C4.5, K-Means, SVM, Apriori, EM, PageRank, AdaBoost, kNN, Naive Bayes, CART  
 
-### 8. Top-10 most popular data mining algorithms  
+### 8. Major issues in data mining  
+- Mining methodology: mining 방법론으로 성능이나 패턴 평가 등등 포함    
+- User interaction: 유저가 data mining 시스템과 잘 상호작용할 수 있도록  
+- Applications and social impacts: 일반적인 데이터->특정 도메인, 데이터 보안 등 신경쓰기  
 
-### 9. Major issues in data mining  
 
-### 10. Summary  
-
-*Classification and Prediction*  
 
 ## What is classification? What is prediction?  
 
