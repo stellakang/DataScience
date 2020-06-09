@@ -104,7 +104,7 @@ Data warehouse에서 해당 작업과 관련된 데이터를 선택한다.
 
 
 ### 7. Top-10 most popular data mining algorithms  
-18 identified candidates  
+  
 C4.5, K-Means, SVM, Apriori, EM, PageRank, AdaBoost, kNN, Naive Bayes, CART  
 
 ### 8. Major issues in data mining  
@@ -115,32 +115,55 @@ C4.5, K-Means, SVM, Apriori, EM, PageRank, AdaBoost, kNN, Naive Bayes, CART
 
 
 ## What is classification? What is prediction?  
-
+: credit approval, target marketing, medical diagnosis, fraud detection 등에 활용된다.  
   
 ### 1. Classification  
-:  
+: categorical class labels를 예측한다.  
+: 트레이닝셋을 학습시켜 모델을 구성하고 이를 이용하여 새로운 데이터를 분류한다.  
 
 
 **Model Construction**  
-
-**Model Usage**  
+- 목표: 클래스 라벨이 주어진 트레이닝 데이터를 이용하여 학습시킨다.  
+  - 모델: 학습 결과의 모델로 classification rules, decision trees, networks, or mathematical formulae로 나타낼 수 있다. 이후에 이 모델을 이용하여 새로운 샘플 데이터에 대한 결과를 가져온다.   
 
 **Accuracy Evaluation**  
+- 목표: 모델의 정확도를 평가한다.  
+- 테스트 데이터: 트레이닝 데이터와 유사하게 클래스 라벨을 가지고 있다.  
+- 모델을 통해 나온 결과와 실제 클래스 라벨을 비교하여 정확도를 계산한다.  
+- 테스트셋과 트레이닝셋은 서로 겹치지 않아야 오버피팅이 발생하지 않는다.  
 
 cf. Supervised vs. Unsupervised Learning  
-- Supervised Learning   
-- Unsupervised Learning  
+- Supervised Learning(classification): 트레이닝셋은 라벨을 포함하며 이를 학습시켜 새로운 데이터를 분류한다.     
+- Unsupervised Learning(clustering): 트레이닝셋의 라벨이 주어지지않고 데이터의 클러스터를 형성한다.    
 
 ### 2. Prediction
-:  
+: 연속적인 값을 가진 함수의 모델을 구성하고 이를 이용하여 모르거나 잃어버린 값을 예측한다.   
 
 
 ## Issues regarding classification and prediction  
 
 
 ### 1. Issues : Data Preparation  
+- Data cleaing: 노이즈가있거나 값이 비어있는 데이터를 줄이기 위한 전처리    
+- Relevance analysis: feature selection(필요한 애트리뷰트만 남긴다.)    
+- Data transformation: generalize, normalize data  
 
 ### 2. Issues : Evaluating Classification Methods  
+- Accuracy  
+  classifier accuracy: 클래스 라벨을 얼마나 잘 분류하는지  
+  predictor accuracy: 애트리뷰트의 값을 얼마나 정확히 예측하는지  
+  
+- Speed  
+  training time/ classification, prediction time  
+
+- Robustness: 노이즈나 비어있는 값을 다루는 능력  
+
+- Scalability: 디스크에 있는 많은 데이터에 대한 효율성  
+
+- Interpretability: 뉴럴 네트워크는 어떻게 그러한 분류 결과가 나왔는지 이유를 잘 말해주지 못하므로 이 특성이 낮다.  
+  -> 모델에 대한 이해도  
+
+- 이 외에도 decision tree size, compactness of classification rules 등등  
 
 ## Classification by decision tree induction  
 
