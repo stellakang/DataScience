@@ -450,30 +450,143 @@ cf. Supervised vs. Unsupervised Learning
 
 ### 1. Classifier Accuracy Measures  
 
+- Confusion matrix  
+  |    | C1 | C2 | 
+  | -- |:--:|:--:|
+  | C1 |True positive|False negative|
+  | C2 |False positive|True negative|  
+  
+  주로 찾아내야하는 질병, 사기 등을 positive로 둔다.  
+  True, False: 실제 클래스와 분류한 결과의 일치 여부  
+  positive, negative: 내가 분류한 결과가 positive인지 negative인지  
+    
+    
+  Example.
+  |    |buy_computer=yes|buy_computer=no|total|recognition(%)| 
+  |:--:|:--:|:--:|:--:|:--:|
+  |buy_computer=yes|6954|46|7000|99.34|
+  |buy_computer=no|412|2588|3000|86.27|
+  |total|7366|2634|100000|95.52|  
+  
+  - Accuracy of a classifier M, acc(M): 모델에 의해 제대로 분류될 확률  
+    = (6954+2588)/100000  
+  - Error rate of M = 1 - acc(M)  
+
+- Accuracy Measures  
+  - sensitivity(recall) = t-pos/pos 6954/7000   
+  - specificity = t-neg/neg 2588/3000    
+  - precision = t-pos/(t-pos+f-pos) 6954/(6954+412)  
+  - accuracy = sensitivity x pos/(pos+neg) + specificity x neg/(pos+neg)  
+    = t-pos/(pos+neg) + t-neg/(pos+neg) = (t-pos+t-neg)/(pos+neg)  
+  
+  > 차이 알기: sensitivity(재현율)는 암 걸린 사람들 중에 암 걸렸다고 판단한 사람들의 비율  
+    precision(정밀도)은 암이라고 판단한 사람들 중에 진짜 암 걸린 사람들의 비율   
+    재현율은 암환자 생각하고 정밀도는 스팸 생각하기!!!  
+    
+    
+    - 암환자에게 암이 아니라고 예측한 경우는 치명적! => recall  
+    - 스팸이라고 예측했는데 그 중에 정상 메일이 있는 경우는 치명적! => precision  
+  
+
 ### 2. Predictor Error Measures  
+
+- Measure predictor accuracy  
+  예측값이 실제값보다 얼마나 멀리 떨어져있는가!  
+  
+- Loss function  
+  실제 값과 예측된 값의 차이(=에러)를 측정한다.  
+  Absolute error: |yi-yi'|  
+  Squared error: (yi-yi')^2  
+  
+- Test error(generalization error)  
+  : 테스트셋의 loss의 평균  
+  
+  - Mean absolute error: sum(|yi-yi'|)/d  
+  - Mean squared error: sum((yi-yi')^2)/d  
+  - Relative absolute error: sum(|yi-yi'|)/sum(|yi-avg(y)|)  
+  - Relative squared error: sum((yi-yi')^2)/sum((yi-avg(y))^2)  
+  
+    
+  -> mean squared error는 아웃라이어를 더 크게 측정한다.   
+  -> square root mean squared error(mean squared error에 루트 씌운거)와 square root relative squared error(relative squared error에 루트 씌운거)가 자주 쓰인다.  
+  
+
+
 
 ### 3. Evaluating the Accuracy of a Classifier or Predictor  
 
 - Holdout Method  
+  - 주어진 데이터가 랜덤하게 training set, test set 으로 분리된다.  
+  - 랜덤 샘플링: holdout의 변형  
+    -> holdout을 k번 반복한다.  
+    -> 정확도는 얻어진 k개의 평균  
 
 - Cross Validation  
+  - k-fold, k=10이 널리 쓰임  
+  - 랜덤하게 데이터를 동일하게 k개로 나눈다.(서로 교집합 없이)  
+  - i-th iteration에는 Di를 테스트셋으로 하고 나머지는 트레이닝셋으로 한다.  
 
 - Leave-one-out  
+  - 적은 데이터를 위한, cross-validation의 특별한 케이스  
+  - k = # of tuples -> k를 데이터 수만큼  
 
 - Stratified cross-validation  
+  - cross-validation의 특별한 케이스  
+  - 각 fold의 클래스 분포가 같아지도록 분배한다.  
+  - 예를 들어, positive=70%, negative=30% 이면, 각 fold의 데이터들도 이 비율을 이루도록 분배한다.  
 
 - Bootstrap  
+  - 작은 데이터셋인 경우 필요하다. (불충분한 트레이닝 샘플)  
+  - 전체 데이터셋에서 트레이닝 샘플을 골라낼 때, 한 번 골랐던 샘플도 다시 선택될 수 있도록 한다.  
+  - .632 bootstrap: 가장 흔한 bootstrap 방법  
+    - 데이터셋이 d샘플로 이루어져있으면, d번 샘플되고 한 번 골라졌던 것도 다시 고를 수 있다.  
+    - 전체 데이터에서 결과적으로 뽑히지 않은 것은 테스트셋으로 분류한다.  
+    - 대략 전체 데이터의 63.2%가 트레이닝셋으로 분류되고 36.8%가 테스트셋으로 분류된다.  
+    - 샘플링하는 과정을 k번 반복하며 모델의 정확도는 i=1~k에 대하여   
+      acc(M) = sum(0.632x(model Mi acc of testset) + 0.368x(model Mi acc of trainset))  
 
 
 ## Ensemble Methods  
 
 ### 1. Concepts  
+- 여러 모델들의 조합으로 정확도를 높인다.  
+- k개의 학습된 모델을 결합하여 개선된 M' 모델을 생성한다.  
+- 잘 알려진 앙상블 메소드  
+  - Bagging: 여러 분류기의 예측값의 평균  
+  - Boosting: 여러 분류기마다 가중치를 매긴 결과    
+  - Ensemble: 다른 종류의 분류기들을 결합   
 
-### 2. Bagging  
+### 2. Bagging: Bootstrap Aggregation    
+
+- "의사들의 가장 많은 투표를 차지한 진단을 내린다"  
+
+- Training  
+  - bootstrap 방식으로 테스트셋을 정한다.  
+    d개의 튜플을 중복허용해서 d개 뽑는다.  
+  - 각 트레이닝셋마다 분류모델을 학습시킨다.  
+
+- Classification  
+  - 각 분류기 Mi는 예측 클래스를 리턴한다.  
+  - bagged classifier M'는 각 분류기의 결과값을 모아서 가장 많은 클래스를 리턴한다.  
+  
+- Prediction  
+  - 테스트튜플의 각 예측값의 평균값을 리턴한다.  
+  
+- Accuracy  
+  - 하나의 분류기보다 더 나을 때가 많다.  
+  - 노이즈 데이터에 대해서 상당히 나쁘지 않다.  
+  - prediction, classification에서 개선된 정확도를 보임  
+
 
 ### 3. Boosting  
 
-
+- "이전 진단 기록을 바탕으로 더 정확한 진단을 하는 의사에게 높은 가중치를 주어 진단을 내린다"  
+- 진행 과정  
+  - 각 트레이닝 튜플에 가중치가 할당된다.(처음엔 weight가 모두 같은데 학습해가면서 달라진다.)    
+  - k개의 분류기가 학습된다.  
+  - 분류기 Mi가 학습된 후, Mi+1을 학습시킬 떄에는 이전 Mi에서 잘못 분류된 트레이닝 튜플에 더 큰 가중치를 부여한다.  
+    -> 그럼 더 트레이닝 샘플로 뽑힐 가능성이 높아진다.  
+  - 최종 M'은 가중치(=각 분류기의 정확도)가 반영된 각 분류기의 결과를 결합하여 나타낸다.   
 
 
 
