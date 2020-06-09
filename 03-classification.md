@@ -397,10 +397,54 @@ cf. Supervised vs. Unsupervised Learning
 
 ### 1. What is Prediction?  
 
-### 2. Linear Regression  
+- classification과 비슷하다.  
+  - 모델을 찾고 주어진 인풋에 대해 연속적인 값을 예측한다.  
+  
+- classification과 다른 점  
+  - classification은 categorical class label을 예측  
+  - prediction은 continuous-valued function 모델을 이용하여 continuous space의 값을 예측하는 것  
+  
+- 주요 함수: regression  
+  - 한개 이상의 독립변수와 종속변수 사이의 관계를 모델링한다.  
 
-### 3. Nonlinear Regression  
+- Regression analysis  
+  - linear and multiple regression  
+  - non-linear regression  
+  등등  
 
+### 2. Linear Regression   
+
+- Linear regression  
+  - 1개의 독립변수 x와 종속변수 y를 포함한다.(linear function-선형함수)   
+  - training  
+    training data를 이용하여 가장 잘 맞는 직선을 찾는다.  
+    y = w1x + w0  
+
+  - Least square method  
+    y = w0 + w1x 직선 중 가장 잘 맞는 직선을 찾기 위한 방법  
+    w0, w1을 찾기 위함.  
+    실제값과 함수의 차이의 제곱이 최소가 되도록 하는 w0, w1  
+    
+    
+    w1=sum((xi-avg(x))x(yi-avg(y)))/sum((xi-avg(x))^2)  
+    w0=avg(y)-w1xavg(x)  
+
+- Multiple linear regression  
+
+  - 아까는 독립변수가 하나였는데 여기서는 하나 이상!  
+    X=<x1,x2,x3,...,xn>: 독립변수(predictor variables)  
+    y:종속변수(response variable)  
+  - 만약 2-D data의 경우는 y=w0 + w1x1 + w2x2  
+  - solutions  
+    : least square method의 확장으로 SAS나 S-plus와 같은 도구 사용  
+  
+
+### 3. Nonlinear Regression   
+
+- 어떤 nonlinear models는 다항 함수와 같은 형태로 나타날 수 있다.  
+- polynomial regression model은 linear regression model로 바꿀 수 있다.  
+  x2 = x^2, x3 = x^3  
+  y = w0 + w1x + w2x2 + w3x3  
 
 ## Accuracy and error measure  
 
