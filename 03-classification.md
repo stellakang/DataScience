@@ -169,9 +169,20 @@ cf. Supervised vs. Unsupervised Learning
 
 
 ### 1. Algorithm  
+: 'greedy algorithm'이며, 'top-down', 'recursive', 'divide-and-conquer' 방식으로 decision tree를 구성한다.  
+
+1) 모든 트레이닝 샘플이 루트 노드에 있다. - 다른 에지나 노드 존재 안 함.  
+2) 애트리뷰트는 categorical 하다고 가정한다. - 연속적인 값이면 범위 나누어서 분할해야 한다.  
+3) 샘플들은 정해진 test attributes에 따라 재귀적으로 나누어진다.  
+4) 해당 노드에서 '모든 샘플이 같은 클래스 라벨에 속하거나', '샘플을 나눌 수 있는 애트리뷰트가 더 이상 존재하지 않는  
+   경우(더 많은 수의 클래스 라벨로 분류)', '샘플이 없는 경우' 더 이상 진행을 멈춘다.  
 
 ### 2. Test Attribute Selection - Attribute Selection Measure  
+그룹을 나눌 때, 좀 더 클래스 라벨이 비슷한 것끼리 잘 나누는 애트리뷰트를 선택한다.  
+
 - Information Gain  
+  - 가장 높은 information gain을 얻는 테스트 애트리뷰트를 선택한다.  
+  - 엔트로피: Info(D)=-sum((pi)log2(pi)) 모든 클래스 라벨마다 전체 튜플 중 그 클래스라벨의 확률(=pi)을 대입하여 값을 구한다.  
 - Gain Ratio  
 - Gini Index  
 
