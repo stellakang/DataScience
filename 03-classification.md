@@ -182,32 +182,130 @@ cf. Supervised vs. Unsupervised Learning
 
 - Information Gain  
   - 가장 높은 information gain을 얻는 테스트 애트리뷰트를 선택한다.  
-  - 엔트로피: Info(D)=-sum((pi)log2(pi)) 모든 클래스 라벨마다 전체 튜플 중 그 클래스라벨의 확률(=pi)을 대입하여 값을 구한다.  
+  - 엔트로피(expected information):  
+    Info(D)=-sum((pi)log2(pi)) 모든 클래스 라벨마다 전체 튜플 중 그 클래스라벨의 확률(=pi)을 대입하여 값을 구한다.  
+    더 다양할수록 큰 엔트로피 값을 갖는다.  
+    
+  - A 애트리뷰트를 이용하여 D를 v개로 partition했을 떄 엔트로피    
+    InfoA(D)=sum((Dj/D)xInfo(Dj)) 모든 v개의 partition마다 엔트로피 구한 것의 weighted sum  
+  
+  - Information Gained  
+    A 애트리뷰트로 partition했을 때  
+    Gain(A) = Info(D) - InfoA(D)  
+  
+  - 더 다양할수록 값이 크니까 'Info(D)의 값은 크면서 InfoA(D)의 값은 작은' Gain값이 가장 큰 애트리뷰트를 선택한다.  
+  
+  - 만약 애트리뷰트가 연속적인 값을 갖는다면, 애트리뷰트 값에 따라 증가하는 순서대로 정렬하고  
+    두 페어 사이의 중간 값들을 split point로 볼 수 있다.  
+    엔트로피를 계산했을때 가장 엔트로피가 작은(=information gain은 큰) split point가 best split point가 된다.  
+    > split point는 애트리뷰트 값에 따라 나눈 것이므로 클래스 분포는 어떤 split point를 선택하느냐에 따라  
+      비슷한 것끼리 나누어져있을수도 있고 너무 다른 클래스끼리 분류되어있을 수도 있다.  
+      
+    > binary partition이 아닌 n-ary partition도 가능하지만 combinatorial number of partition만큼 엔트로피를 계산하기 때문에  
+      데이터가 너무 많으면 많은 엔트로피 계산이 수반되어 성능에 문제가 생긴다.  
+      
+  - 단점: value 값이 많은 애트리뷰트의 경우 information gain이 커진다.  
+      
 - Gain Ratio  
+  - 등장 배경: Information gain은 애트리뷰트 value의 수가 많을수록 커지는 경향이 있다.  
+    -> C4.5(well known classifier)는 gain ratio를 사용하여 이 문제를 해결함.  
+  - GainRatio(A) = Gain(A)/SplitInfo(A)  
+    SplitInfoA(D) = sum(-(|Dj|/|D|)xlog2(|Dj|/|D|))  
+    여기서 splitinfoA는 애트리뷰트에 의해 나누어진 확률, 클래스라벨x  
+  - Gain Ratio가 가장 큰 애트리뷰트가 선정된다.  
+    
+  - 단점: 불균형이 심한 애트리뷰트를 선택하기 쉬워진다.   
+  
 - Gini Index  
+  - gini(D) = 1-sum(pj^2)  
+    여기서 pj는 클래스라벨에 대한 확률  
+    giniA(D) = (|D1|/|D|)gini(D1)+(|D2|/|D|)gini(D2)  
+    여기서 A 애트리뷰트는 binary partition을 가정     
+    
+    
+    Reduction in impurity:  
+    delta gini(A) = gini(D)-giniA(D)  
+    
+ - 가장 'reduction in impurity'가 큰 애트리뷰트를 선택한다.  
+   binary partition: 모든 split point 중에서 가장 giniA(D)가 작은 값의 지점을 고려해야 함.   
+   어떤 애트리뷰트의 값이 low, medium, high가 있으면 low, medium/high로 나누거나, low/medium,high로 나눈다.  
+ 
+ - 단점: 클래스 수가 많을수록 계산하기 어려워진다, partition이 균등하게 이루어지는 애트리뷰트를 선호한다.  
+   
+   
+     
 
 ### 3. Overfitting  
 
 - Overfitting  
-: 
-problem = 
+: decision tree에서 트레이닝데이터 학습시키는 과정에서 발생할 수 있음 -> 각 브랜치에 하나의 튜플 있는 경우 
+  - problem  
+    : 너무 많은 브랜치가 있다보니 노이즈나 아웃라이어 때문에 다른 경우가 발생할 수 있다.  
+    : 새로운 데이터에 대해서 낮은 정확도를 보인다.       
 
 - Tree pruning  
 : to avoid overfitting  
-- Prepruning  
-- Postpruning  
+
+  - Prepruning  
+    : goodness measure이 일정 값으로 떨어지면 더 이상 브랜치를 생성하지 않는다.  
+    : 적당한 임계값을 정하기 어렵다.  
+    
+    
+  - Postpruning  
+    : pruned tree를 하나씩 본다음에 트레이닝 데이터 말고 다른 데이터로 정확도가 가장 높은 tree를 고른다.  
+
 
 ### 4. Why decision tree in data mining  
 
+- classification in large databases  
+  - unknown data를 정확하게 분류하는 것이 목적  
+  - scalability: performance에 대한 것으로 데이터가 너무 많으면 디스크에 존재하게 된다.  
+
+- Why decision tree induction in data mining?  
+  - 상대적으로 학습 속도가 빠르다.  
+  - decision tree => classification rule로 생성 가능하다.  
+  - disk, ssd에 있는 데이터를 sql query로 접근할 수 있다.  
+  - 다른 classification 방법과 정확도를 비교할 수 있다.  
+  
 
 ### 5. Rule extraction from a Decision Tree  
+
+- rule이 decision tree 보다 이해하기 쉽다.  
+- rule의 갯수 = root에서 leaf까지의 갯수  
+- 여러 노드를 거쳐서 분류할 때 각각 애트리뷰트와 그 값의 쌍은 교집합으로 연결된다.  
+- tuple은 단 하나의 path만 지나친다. : 서로 배타적이고 철저하다.  
 
 
 ## Bayesian classification  
 
 ### 1. Why bayesian classification?  
+- 통계적인 classifier: 확률을 기반으로 분류하며 'Bayes' theorem'을 기반으로 한다.  
+- Performance: naive bayesian classifier은 decision tree와 neural network와 비교할 만한 성능을 가진다.  
+- Incremental: 기존 데이터에 추가적인 데이터를 학습시키기 용이하다. 데이터를 추가한다고 해서 전체 데이터를 다시 학습시킬 필요 없다.  
+- Standard: 최적의 답의 표준을 제공한다.  
 
-### 2. Basics  
+### 2. Bayesian Theorem: Basics  
+- X는 데이터 샘플이며 클래스 라벨이 알려져 있지 않다.  
+- H는 'X가 class C에 속한다'는 가설이다.  
+- X가 주어졌을 때, 모든 클래스에 대해 P(H|X)의 확률이 가장 높은 클래스로 분류한다.  
+
+- 확률 정보 
+  - P(H) (prior probability-사전확률)  
+    - The initial probability(X와 독립)  
+    - X가 컴퓨터를 살 확률 등등  
+  - P(X)  
+    - X 데이터가 발생할 확률  
+  - P(X|H) (posteriori probability)  
+    - H라는 가설이 주어졌을때, X라는 데이터를 가질 확률
+    - 예를들어, X가 컴퓨터를 산다고 할 때, X의 수입이 31-40일 확률  
+
+- Conditional probability  
+  - P(X|H)=P(X inter H)/P(H)  
+  - P(H|X)=P(X inter H)/P(X)  
+  - P(X inter H)=P(H|X)xP(X)=P(X|H)xP(H)  
+  
+- Bayesian Theorem  
+  - P(H|X)=P(X|H)P(H)/P(X)  
 
 ### 3. Naive Bayesian Classifier  
 
