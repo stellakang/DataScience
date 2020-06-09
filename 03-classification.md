@@ -305,27 +305,55 @@ cf. Supervised vs. Unsupervised Learning
   - P(X inter H)=P(H|X)xP(X)=P(X|H)xP(H)  
   
 - Bayesian Theorem  
+  - X 데이터와 사후 확률 P(X|H)가 주어졌을때, 아래 식을 따른다.  
   - P(H|X)=P(X|H)P(H)/P(X)  
+  - likelihood(우도) = posteriori(사후확률) * prior(사전확률)/evidence  
+  - 모든 클래스 중에서 P(Ci|X)가 가장 큰 값을 가지는 클래스로 분류한다.  
+  - 실질적으로 많은 갯수에 대해서 확률을 다 알아야 하니까 computational cost가 많이 든다. 
 
 ### 3. Naive Bayesian Classifier  
+: bayes theorem을 계산할 때, P(X)는 상수값이니까 분자만 계산하면 되는데 이 값이 너무 computational cost가 많이 드니까   애트리뷰트끼리 다 독립이라고 생각하고 계산하기  
 
+- P(X|Ci)=P(x1|Ci)xP(x2|Ci)x...xP(xn|Ci) 로 계산하면 계산량을 많이 줄일 수 있다.  
+  - 만약 애트리뷰트가 categorical한 경우, P(xk|Ci)는 (애트리뷰트값이 xk인 튜플 수)/(Ci에 속하는 튜플 수)  
+  - 만약 애트리뷰트가 continuous-valued인 경우, 평균과 표준편차 값을 가지고 가우시안 분포를 따른다고 보고 계산한다.  
+    평균=class Ci의 평균, 표준편차=class Ci의 표준편차  
+    
 - Advantages  
+  - 구현하기 쉽고 데이터가 늘어나면 기존 모델에 새로운 데이터 추가하면 된다.  
+  - 좋은 결과를 가져온다.  
+  
 - Disadvantages  
+  - 애트리뷰트끼리 독립적이라는 추정을 기반으로 하기 때문에 이 가정이 맞지 않는 경우 정확도 손실이 생긴다.  
+  - 실질적으로 애트리뷰트끼리는 의존도를 가짐. 나이랑 당뇨병이랑 연관이 있듯이!  
+    -> 이 의존도를 어떻게 해야하나? Bayesian Belief Networks (여기서 다루지 않는다.)  
+ 
 
 ### 4. Avoiding the 0-Probability Problem  
 
+- 조건부 확률중에 하나라도 0인 값이 있으면 해당 클래스에 대한 확률은 0이 되는 문제가 발생   
+- **Solution** Laplacian correction 사용 : 모든 애트리뷰트의 값마다(partition) 1을 더해준다.  
+  예를 들어, Prob(income=low)의 분모에는 애트리뷰트의 수만큼 더해지고 분자에는 1이 더해질 것  
 
 ## Rule-based classification  
 
-### IF-THEN Rules  
-- Representation  
+### IF-THEN Rules    
+  : knowledge를 IF-THEN 형태로 표현한다.  
+  : If 부분은 antecedent/precondition, Then 부분은 rule consequent이라고 한다.  
 
-- Assessment of a Rule  
-
-- Conflict Resolution  
+  - Assessment of a Rule <*Rule R에 대한 평가 기준*>      
+    - coverage: R로 분류가 가능한 것의 확률. Ncovers/|D|  
+    - accuracy: 분류가 가능한 것 중에서 맞게 분류되는 확률. Ncorrect/Ncovers  
+  
+  - Conflict Resolution  
+    : 만약, 여러 룰에 다 해당되는 경우, conflict resolution 필요  
+    - size ordering: antecedent에서 애트리뷰트의 갯수가 많은, 가장 tough한 rule을 고른다.  
+    - class-based ordering: 클래스마다 빈도수를 계산하거나 잘못 분류된 cost 등으로 결정한다.    
+    - rule-based ordering: 전문가에 의해 기준을 정해서 우선순위를 정한다.    
 
 
 ## Associative Classification  
+
 
 
 ## Lazy learners  
