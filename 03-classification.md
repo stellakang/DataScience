@@ -338,33 +338,59 @@ cf. Supervised vs. Unsupervised Learning
 ## Rule-based classification  
 
 ### IF-THEN Rules    
-  : knowledge를 IF-THEN 형태로 표현한다.  
-  : If 부분은 antecedent/precondition, Then 부분은 rule consequent이라고 한다.  
+: knowledge를 IF-THEN 형태로 표현한다.  
+: If 부분은 antecedent/precondition, Then 부분은 rule consequent이라고 한다.  
 
-  - Assessment of a Rule <*Rule R에 대한 평가 기준*>      
-    - coverage: R로 분류가 가능한 것의 확률. Ncovers/|D|  
-    - accuracy: 분류가 가능한 것 중에서 맞게 분류되는 확률. Ncorrect/Ncovers  
+- Assessment of a Rule <*Rule R에 대한 평가 기준*>      
+  - coverage: R로 분류가 가능한 것의 확률. Ncovers/|D|  
+  - accuracy: 분류가 가능한 것 중에서 맞게 분류되는 확률. Ncorrect/Ncovers  
   
-  - Conflict Resolution  
-    : 만약, 여러 룰에 다 해당되는 경우, conflict resolution 필요  
-    - size ordering: antecedent에서 애트리뷰트의 갯수가 많은, 가장 tough한 rule을 고른다.  
-    - class-based ordering: 클래스마다 빈도수를 계산하거나 잘못 분류된 cost 등으로 결정한다.    
-    - rule-based ordering: 전문가에 의해 기준을 정해서 우선순위를 정한다.    
+- Conflict Resolution  
+  : 만약, 여러 룰에 다 해당되는 경우, conflict resolution 필요  
+  - size ordering: antecedent에서 애트리뷰트의 갯수가 많은, 가장 tough한 rule을 고른다.  
+  - class-based ordering: 클래스마다 빈도수를 계산하거나 잘못 분류된 cost 등으로 결정한다.    
+  - rule-based ordering: 전문가에 의해 기준을 정해서 우선순위를 정한다.    
 
 
 ## Associative Classification  
 
+- Associative classification  
+  - association rules는 분류에 사용된다.  
+  - frequent pattern과 클래스 라벨 간에 결합력이 큰 것을 찾는다.  
+  - 형태  
+    : p1^p2...^pi -> "Aclass=C"(conf, sup)  
+  - decision tree는 룰이 exclusive 하지만, associative classification은 룰이 not exclusive하다.  
+    튜플이 주어지면 하나 이상의 룰에 배치된다.  
+    
+- Why effective?  
+  - 많은 애트리뷰트 중에서 가장 높은 결합력을 가진 것을 탐색한다.  
+  - C4.5보다 더 정확하다고 알려져있다.  
 
 
 ## Lazy learners  
 
 ### 1. Lazy vs Eager Learning  
+- Eager learning
+  : 이전에 다루어졌던 방식 
+  - 트레이닝셋이 주어졌을때, 새로운 테스트 튜플을 받기 전에 분류 모델을 형성한다.  
+    > 바로 테스트셋이 오면 분류할 수 있도록!   
+  - 테스트샘플은 모델의 구축에 영향을 미치지 못한다.  
+- Lazy learning  
+  - instance-based learning, lazy evaluation    
+  - 트레이닝셋이 주어졌을때, 그냥 저장해두고 테스트 튜플이 주어질 때까지 기다린다.  
+  - 테스트 샘플에 기반해 뽑힌 데이터로 local model을 만들고 inference 한다.  
+  - 트레이닝에는 시간이 더 적게 걸리고 예측할 때에 더 많이 걸린다.  
+  - typical example: knn approach  
 
 ### 2. Accuracy  
+- eager method는 전체 데이터를 다 다룰 수 있는 하나의 모델(hypothesis)를 만들어야 한다.  
+- lazy method는 많은 local linear function들을 이용한다.  
 
-### 3. Lazy Learner : Instance-Based Methods  
-
-- k-nearest neighbor approach  
+### Lazy Learning example : KNN  
+- 모든 인스턴스들은 n차원 공간에 대응한다.(n 애트리뷰트가 있을 때)  
+  -> dist(X1, X2)가 공간에서 정의된다.  
+- 테스트 샘플이 주어지면, 거리가 가장 가까운 k개의 샘플을 가져오고   
+  그 중에서 다수의 그룹의 클래스로 분류된다.  
 
   
 ## Prediction  
