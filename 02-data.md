@@ -103,7 +103,32 @@
   
 ### 1. Measuring the Central tendency  
 - Mean  
+  sample의 mean: (샘플의 x의 합)/(x의 갯수)  
+  전체의 mean: (전체 x의 합)/(전체 x의 갯수)  
+  - weighted arithmetic mean(샘플마다 중요도 반영)  
+  - trimmed mean(너무 극단적인 값이 있다면 제외하고 계산)  
+  
 - Median  
+  mean은 아웃라이어에 영향을 많이 받는다는 단점!  
+  
+  - 홀수개의 데이터인 경우 가장 가운데 값, 짝수개의 데이터인 경우 가운데 두개값의 평균  
+  - 새로운 값이 들어오면 처음부터 구해야하기 때문에 interpolation으로 추정하는 방법 사용.  
+    처음에 구간을 나누고 도중에 새로운 데이터가 들어오면 그 데이터가 해당하는 구간의 frequency를 한 개 올려준다.  
+    median = L1(구간의 시작지점) + ((n/2-sum(이전 freq))/(median frequency))x width  
+    
+    ex. 
+    |age|frequency|
+    |:-:|:-------:|
+    |1-5|200|
+    |6-15|450|
+    |16-20|300|
+    |21-50|1500|
+    |51-80|700|
+    |81-110|44|
+    
+    median = 21 + ((1597-950)/(1500))x29 = 21 + 18763/1500  
+    
+    
 - Mode  
 
 - symmetric vs skewed data  
