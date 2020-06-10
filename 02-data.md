@@ -183,19 +183,54 @@
   - box로 표현한다.  
   - box의 왼쪽 끝은 Q1, 오른쪽 끝은 Q3  
   - median은 box안에 선으로 표기한다.  
-  - 
+  - box 바깥은 선으로 연결하여 minimum, maximum까지 연결한다.  
+  - outliers: outlier threshold를 넘어간 곳에 점으로 표기한다.  
 
 3) Properties of Normal Distribution Curve  
 
+- 뮤-시그마 to 뮤+시그마: 68%를 포함한다.  
+- 뮤-2시그마 to 뮤+2시그마: 95%를 포함한다.  
+- 뮤-3시그마 to 뮤+3시그마: 99.7%를 포함한다.  
 
 
 ## Data Visualization  
 
 ### 1. Boxplot  
+: 5개의 숫자(min, q1, median, q3, max)를 시각적으로 보여줌.  
+
+
 ### 2. Histogram  
+: x축은 값, y축은 빈도를 나타내는 막대 형태의 그래프.  
+
+- 막대는 서로 인접해있고 겹치지 않는다.  
+- 막대그래프와 차이  
+  - 막대그래프는 높이가 그 값을 나타낸다.  
+  - 히스토그램은 넓이가 그 값을 나타낸다.  
+  - 각 막대가 서로 다른 너비를 가지면 중요한 차이를 보일 것!!  
+  
+- boxplots보다 더 많은 정보를 전달하기도 한다.  
+  - min, q1, median, q3, max값이 모두 같아도 median쪽에 빈도가 더 많아도 되고  
+    그 주변에 대칭으로 많아도 되기 때문에 boxplot자체는 완전히 같지만 데이터 분포는 달라진다.  
+
+
 ### 3. Quantile plot  
+: x값과 f를 쌍으로 표기하는 방식으로 이때 f는 100fi%는 <=xi이라는 것을 의미한다.  
+
+- 모든 데이터를 표기.  
+- f를 0, 0.25, 0.5, 0.75, 1.00에 눈금을 두어 데이터들이 어느 지점에서 0퍼이고 25퍼인지 등을 표기  
+- 전체적인 분포도 알 수 있고 부분적으로 가파른 부분이나 완만한 부분 등을 알 수 있다.  
+
 ### 4. Quantile-quantile plot  
+- 한 분포의 quantiles와 이에 대응하는 다른 분포의 quantiles를 표기한다.  
+- 예를 들어, branch1, branch2가 있으면 branch1 축의 40,50,...,120 값의 분포에 대해 branch2는 어떻게 분포하는지 점으로 표기    
+  branch2가 더 높은 값일 때, branch1이 더 낮은 값이면 branch2가 더 가격이 높은 것  
+  
 ### 5. Scatter plot  
+
+- 각 값이(예를 들어 아이템 가격과 팔린 갯수) 평면에 점으로 표현된다.  
+- 각 점들의 클러스터와 아웃라이어를 찾을 수 있게 한다.  
+- positively, negatively correlated data를 알 수 있게 한다.  
+  증가할 때 같이 증가하면 positive, 증가할 때 감소하면 negative  
 
 
 ## Measuring Data Similarity and Dissimilarity  
