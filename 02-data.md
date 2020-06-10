@@ -237,13 +237,98 @@
 
 ### 1. Similarity and Dissimilarity  
 
+- Similarity  
+  - 두 data objects가 얼마나 비슷한지 수치로 나타내는 것  
+  - 두 objects가 비슷할수록 더 값이 크다.  
+  - 0,1 사이의 값을 가진다.  
+  
+  
+- Dissimilarity(=distance)  
+  - 두 data objects가 얼마나 다른지 수치로 나타내는 것  
+  - 두 objects가 비슷할수록 더 값이 작다.  
+  - 같은 object인 경우 0값을 갖는다.  
+  - 상황에 따라 upper limit이 다르게 설정된다.  
+  
+- Proximity  
+  similarity나 dissimilarity를 둘다 나타낸다.  
+
 ### 2. Data matrix and Dissimilarity matrix  
+
+- Data matrix  
+  - n개의 데이터마다 가지는 p개의 attribute들을 나타낸다.  
+  - 한 row가 하나의 데이터를 나타내며 전체 row는 전체 데이터 샘플을 나타낸다.  
+  - column별로 애트리뷰트의 값이 저장되어있는 행렬이다.  
+  - two modes: 한 차원은 sample, 다른 한 차원은 attribute를 나타낸다.  
+  
+- Dissimilarity matrix  
+  - n개의 데이터가 있으나 여기서는 페어마다 distance를 저장한다.  
+  - symmetric하기 때문에 triangular matrix이다.  
+  - single mode: 두 차원 모두 object를 나타낸다.  
+  
 
 ### 3. Proximity Measure  
 
-  - Nominal Attributes  
+  - Nominal Attributes   
+    둘 중 하나 적용   
+    - method1: simple matching  
+      m: the number of matches, p: total number of variables  
+      d(i,j)=(p-m)/p  
+      
+    - method2: binary attributes를 많이 사용  
+      binary attribute로 각 상태를 나타내서 yellow이면 yellow=1, 나머지 red, green, ..., =0으로 나타낸다.   
   
   - Binary Attributes  
+    - contingency table을 사용한다.  
+      <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th colspan=4 style="text-align:center">Oj</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan=4>Oj</td>
+                <td></td>
+                <td style="text-align:center">1</td>
+                <td style="text-align:center">0</td>
+                <td style="text-align:center">sum</td>
+            </tr>
+            <tr>
+                <td style="text-align:center">1</td>
+                <td style="text-align:center">q</td>
+                <td style="text-align:center">r</td>
+                <td style="text-align:center">q+r</td>
+            </tr>
+            <tr>
+                <td style="text-align:center">0</td>
+                <td style="text-align:center">s</td>
+                <td style="text-align:center">t</td>
+                <td style="text-align:center">s+t</td>
+            </tr>
+            <tr>
+                <td style="text-align:center">sum</td>
+                <td style="text-align:center">q+s</td>
+                <td style="text-align:center">r+t</td>
+                <td style="text-align:center">p</td>
+            </tr>
+        </tbody>
+      </table>
+  
+    
+    
+    - Distance measure  
+      - symmetric binary variables  
+        d(i,j) = (r+s)/(q+r+s+t)  
+      - asymmetric binary variables  
+        d(i,j) = (r+s)/(q+r+s)  
+        
+      > 대칭인건 다 더해서 값 서로 다른거 비율 구하고!!  
+        비대칭인건 둘다 0인거 제외하고 다른거 비율 구하기!  
+        
+    - Jaccard coefficient(similarity measure for asymmetric binary variables)  
+      sim(i,j) = q/(q+r+s)
+         
   
   - Numeric Attributes  
     
