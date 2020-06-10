@@ -130,24 +130,60 @@
     
     
 - Mode  
-
-- symmetric vs skewed data  
-
+  : 최빈값  
+  - 가장 데이터에서 많이 등장하는 값  
+  - 가장 빈도 높은 것 1,2,3개 선택: unimodal, bimodal, trimodal  
+  - empirical formula  
+    - 통계적으로 아래 식을 만족함  
+      mean-mode=3x(mean-median)  
+      평균에서 최빈값 뺀 것은 평균에서 중앙값 뺀 것의 3배이다.  
+      
+    - symmetric vs skewed data  
+      위의 식에서 2개를 알고있으면 나머지 하나를 예측할 수 있다.  
+      symmetric -> mean=median=mode  
+      skewed -> mean>median>mode인 경우, positively skewed  
+             -> mode>median>mean인 경우, negatively skewed  
+         
+    
 
 ### 2. Measuring the Dispersion of Data  
 
 1) Measurements    
 - quartiles  
-- Inter-quartile range  
+  Q1(25th percentile), Q3(75th percentile)를 의미  
+  Q2(50th percentile)==median  
+  Q4(100th percentile)==meaningless  
+  
+- Inter-quartile range(IQR)  
+  IQR = Q3-Q1  
+  
 - Five number summary  
+  min, Q1, median, Q3, max  
+  
 - Boxplot  
+  : graphical tool  
+  뒤에서 자세히 나옴  
+  
 - Outlier  
+  값이 1.5xIQR보다 작거나 큰 값  
+
 - Variance  
+  분산 -> 편차 제곱의 평균    
+  sample의 variance: sum((xi-x의평균)^2)/(n-1)  *n-1로 나눈다*  
+  전체 데이터의 variance: sum(xi^2)/N - 평균^2 *n으로 나누며 간단하게 (**제**곱의 **평**균)-(**평**균의 **제**곱)으로*    
+  
 - Standard deviation  
+  s또는 시그마는 variance의 루트  
 
 2) Boxplot Analysis  
 - Five-number summary  
+  minimum, Q1, median, Q3, Maximum  
+  
 - Boxplot  
+  - box로 표현한다.  
+  - box의 왼쪽 끝은 Q1, 오른쪽 끝은 Q3  
+  - median은 box안에 선으로 표기한다.  
+  - 
 
 3) Properties of Normal Distribution Curve  
 
