@@ -332,18 +332,71 @@
   
   - Numeric Attributes  
     
-    - Minkowski distance  
+    - Minkowski distance(=L-h norm)    
+      : distance 구하는 유명한 방식  
+      
+      
+      d(i,j)=rootk(sum((xik-xjk)^k))  
+      - h=1: manhattan distance  
+      - h=2: euclidean distance  
+      - h->무한대: Supremum distance  
+        애트리뷰트끼리 차이가 가장 큰 값 = max|xif-xjf|  
+        
+      
+      **Properties**
+      - 항상 0보다 크거나 같다.  
+      - symmetric  
+      - d(i,j)<=d(i,k)+d(k,j)  
+      -> 이 특성 만족하는 distance를 **metric**이라고 한다.  
+      
     
   - Ordinal Attributes  
+      
+    interval-scaled로 바꾼다.
+    1) 값을 rank로 바꾼다.  
+    2) 값을 0-1사이 범위로 바꾼다.  
+    -> 실제 값이 rif라면 여기서 1빼고 highest rank에서 1뺀거
+    
+    Zif = (rif-1) / ( Mf - 1 )  
+    - Mf: highest rank값  
+    
+    3) interval-scaled variables를 계산할 때 사용한 방식으로 dissimilarity를 계산  
+    
   
   - Mixed Type  
+    - nominal, symmetric binary, asymmetric binary, numeric, ordinal 모두 포함할 것     - weighted formula를 이용한다.
+      각 object에 대한 weight와 dij(f)를 곱하는 weighted sum이며 이때 dij(f)는
+      - f가 binary, nominal일 때, 
+        서로 같으면 dij(f)=0, 서로 다르면 dij(f)=1  
+      - f가 숫자면  
+        normalized distance를 사용한다.  
+      - f가 ordinal이면  
+        rank를 계산하고 Zif를 구한다.  
   
   
 ### 4. Standardizing Numeric Data    
+  
+  - Z-score
+    Z=(x-avg)/std  
+    - X: 표준화될 raw score  
+    - 뮤: 전체 데이터 평균  
+    - std: 표준편차  
+    
+  - Meaning  
+    : raw score - mean
+    - "-"이면 평균 아래  
+    - "+"이면 평균 위  
+    
+  - 표준편차 대신 (편차의 절댓값의 합의 평균)을 사용(mean absolute deviation)할 수 있다.  
+    -> 아웃라이어는 제곱을 사용하면 값이 더 커지기 떄문에 mean absolute deviation이 더 robust  
 
 
 ### 5. Cosine Similarity  
 
+- 다큐먼트마다 각 단어의 빈도수를 기록한 행렬이 있다고 하자.  
+  한 다큐먼트가 다른 다큐먼트의 두배라면 유사도는 비슷해야 하는데 유클리디안으로 계산하면 너무 값이 커진다.  
+  -> 이를 해결하기 위해서 cosine similarity 사용  
 
+- cos(d1, d2) = (d1, d2 내적)/(d1크기)x(d2크기)  
 
 
