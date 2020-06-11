@@ -97,7 +97,8 @@
 - Problem  
   
   - outliers에 민감하다.  
-  -> K-medoids  
+  
+  ==> K-medoids  
   
 
 
@@ -105,21 +106,99 @@
 
 - PAM  
   - Algorithm  
-  - 
+  
+  - Problem  
+    - 
+    
+    ==> CLARA  
+  
 
+- CLARA  
+  -   
+  - Strength  
+  - Weakness  
+  
+  
 
 ## Hierarchical Methods  
 
+-  
+-  
 
 ## Density-Based Methods   
+:  
+
+### 1. Basic Concepts  
+
+  - Major features  
+  - Several interesting studies  
+    - DBSCAN  
+    - OPTICS  
+    - CLIQUE  
+    
+  - Two parameters  
+    - Eps  
+    - MinPts  
+    
+  - Directly density-reachable   
+    :  
+    -  
+  
+  - Density-reachable  
+    :  
+    -   
+    
+  - Density-connected  
+  
+
+### 2. DBSCAN  
+
+-  
+-  
+
+- Algorithm  
+  -  
+  -  
+  -  
 
 
-## Clustering High-Dimensional Data  
+### 3. OPTICS  
 
+- Concepts  
+  -  
+  -  
 
-## Constraint-Based Clustering   
+- Process  
+
 
 
 ## Outlier Analysis  
+
+### 1. What is Outlier Discovery  
+
+-  
+- Problem  
+- Applications  
+  -  
+  -  
+  -  
+  -  
+  
+
+### 2. Outlier Discovery: Statistical Approaches  
+
+- Use discordancy tests depending on  
+  - 
+  
+  
+- Drawbacks  
+  - 
+  
+
+### 3. Outlier Discovery: Distance-Based Approach  
+
+-  
+-  
+-  
 
 
