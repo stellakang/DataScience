@@ -218,18 +218,49 @@
 ## Hierarchical Methods  
 
 ### 1. Hierarchical Clustering  
-:  
+: distance matrix를 사용한다. k는 필요하지 않지만 termination condition이 필요하다.  
+
+
 - agglomerative(AGNES)    
+  - bottom-up  
+  - single-link method를 사용한다!!  
+    -> minimum distance가 가장 작은 (==가장 유사도가 높은) 클러스터끼리 머지한다.  
+  - 나중에 모든 노드가 같은 클러스터에 속하게 된다.  
+  - Complexity: n(n-1)/2  (n개의 클러스터 중에 머지할 두개를 고르기 nC2)  
+  
+  - *Dendrogram*  
+    - 클러스터가 머지되는 순서를 보여준다.  
+    - 특정 레벨에서 자르면 각각 덩어리가 클러스터가 된다.  
+
 - divisive(DIANA)  
+  - top-down  
+  - 모든 n개의 objects가 하나의 클러스터를 이룬다.   
+  - 나중에 모든 노드가 하나의 클러스터가 된다.  
+  - Complexity: 2^(n-1) - 1  
+    (n개의 오브젝트가 2개로 나뉠때 0이나 1선택할 수 있다고 보고 한쪽으로 몰리지 않도록 -2하면 2^n-2 이다.  
+     그리고 0,1 서로 바뀌어도 되니까 2로 나누면 2^n-1 -1이 된다. 너무 많다!!)  
+     
+  - Algorithm in detail  
+    - 가장 다른 모든 오브젝트와의 average dissimilarity가 큰 오브젝트를 골라서 splinter group에 넣는다.  
+    - splinter group이 아닌 모든 오브젝트 i에 대해서  
+      Di = [average d(i,j), j not in splinter group] - [average d(i,j), j in splinter group]  
+      를 계산한다.  
+    - Di가 가장 큰 오브젝트 h를 찾고, 만약 Dh>0 이면, h는 splinter group에 가까우므로 splinter group에 포함시킨다.  
+    - Dh<0 이 나올때까지 step 2,3을 계속 반복하고 음수가 나오면 그 전까지 분리된 그룹을 바탕으로 두개로 나눈다.  
+    - diameter가 가장 큰 클러스터를 선택하고 이전 단계를 다시 반복한다.  
+    - 모든 클러스터들이 한 개의 오브젝트만 남을 때까지 반복한다.  
 
 ### 2. Advanced Hierarchical Clustering Method  
-:  
+: agglomerative clustering method의 문제는 많은 오브젝트들을 다루기 어렵다. (time complexity가 크다.)   
 
 - BIRCH  
+  keyword: CF-tree  
 
 - ROCK  
+  keyword: categorical data, link analysis   
 
 - CHAMELEON  
+  keyword: dynamic modeling  
 
 ## Density-Based Methods   
 :  
