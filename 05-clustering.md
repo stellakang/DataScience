@@ -69,30 +69,57 @@
 ## A Categorization of Major Clustering Methods  
 
 ### 1. Major Clustering Approaches  
+
 - Paritioning approach  
-  -  
-  -  
+  - 다양한 파티션을 구성하고 어떤 기준에 따라 평가한다.   
+  - Typical methods: k-means, k-medoids, CLARANS  
+  
 - Hierarchical approach  
-  -  
-  -  
+  - 어떤 기준으로 계층적으로 데이터를 분리한다.   
+  - Typical methods: Diana, Agnes, BIRCH, ROCK, CHAMELEON    
 - Density-based approach  
-  -  
-  -  
+  - 밀도함수를 기반으로 클러스터를 형성한다.   
+  - Typical methods: DBSCAN, OPTICS    
 
 
 ### 2. Centroid, Radius, and Diameter of a cluster  
+: 클러스터 내에서 centroid, radius, diameter의 정의!! 
 
-- Centroid  
+- Centroid 
+  : 클러스터의 중간!  
+  - 각 애트리뷰트 값 끼리 더해서 평균을 구한다.  
+  - Cm = sum(tip)/N (i: i th object, p: p th attribute)  
+  
 - Radius  
+  : cluster의 모든 object에서 centroid까지 거리 제곱의 평균의 루트값    
+  - Rm = root(sum((tip-cm)^2)/N)  
+  
 - Diameter  
+  : 모든 오브젝트 페어들의 거리 제곱의 평균의 루트값  
+  - Dm = root(sum((tip-tiq)^2)/N(N-1))  
 
 
 - Typical Alternatives to Calculate the Distance between Clusters  
-  - Single link  
+  : 두 클러스터 사이의 single link, complete link, average, centroid, medoid 정의!!  
+  
+  - Single link   
+    : 한 클러스터의 원소와 다른 클러스터의 원소 사이의 최소 거리  
+    - dis(Ki, Kj) = min(tip, tjq)  
+    
   - Complete link  
+    : 한 클러스터의 원소와 다른 클러스터의 원소 사이의 최대 거리  
+    
   - Average  
+    : 한 클러스터와 다른 클러스터 각각에서 원소를 하나씩 뽑은 모든 페어에 대해서 거리를 구한 후 평균을 구한 것  
+    
   - Centroid  
+    : 두 클러스터의 centroid사이의 거리!  
+    - centroid는 실제 objec가 아니라 위치를 나타낸다!  
+    
   - Medoid  
+    : 두 클러스터의 medoid 사이의 거리!  
+    - dist(Ki, Kj)=dis(Mi, Mj)  
+    - Medoid: 클러스터에서 가장 가운데에 위치한 실제 object   
   
 
 ## Partitioning Methods  
