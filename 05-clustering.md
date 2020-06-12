@@ -126,60 +126,93 @@
 
 ### 1. Basic Concept  
 
--  
--  
-- k는 주어져야 한다.  
+- n개의 objects를 k개의 클러스터로 나누는 것으로 클러스터를 대표하는 값과 그 클러스터의 모든 objects 까지 거리의 제곱의 합이 최소가 되도록 한다.   
+- 모든 파티션을 다 전개해보면 global optimal을 찾을 수 있겠지만 heuristic methods를 사용한다.   
+- k값이 주어져야 한다!!   
 
 
 ### 2. The K-Means Clustering Method  
 
 - Algorithm  
-  - 
-  - 
-  - 
-  - 
-  - 
-  
+  - objects를 임의로 k 부분으로 나눈다.  
+  - k 부분으로 나눠진 각 클러스터에 대해서 centroid 값을 계산한다.                                                   
+  - 각 objects를 가장 가까운 seed point(centroid)의 클러스터로 다시 포함시킨다.  
+  - 다시 centroid값을 계산으로 돌아가는 과정을 반복하여 클러스터가 바뀌지 않을 때까지 진행한다.  
 
 - Characteristics  
   - Strength  
+    - 상대적으로 효율적이다. 시간복잡도: O(nkt) (n=the number of objects, k is the number of clusters, t is the number of iterations)   
+      **비교** PAM: O(k(n-k)^2), CLARA: O(ks^2+k(n-k))   
 
   - Comment  
+    : 가끔 local optimum으로 빠진다.  
+    (이니셜 시드에 따라서 달라진다.)  
 
   - Weakness  
-
+    - categorical data인 경우는 불가, numerical attribute만 가능  
+    - k를 미리 정해주어야 한다.  
+    - 노이즈와 아웃라이어를 잘 다루지 못한다.  
+    - non convex shape일 때는 부적절하다.  
 
 - Variations of the K-Means Method  
 
-  - k-modes: Handling categorical data  
+  *numerical로 값을 대입을 못하니까 centroid와 d(X,Y)를 다시 정의해야지!!*  
   
+  - k-modes: Handling categorical data  
+    - centroid 대신 modes(최빈값) 사용  
+      -> numerical data가 아닌 categorical data를 다룰 때 사용!!  
+      
+    - Dissimilarity d(X,Y): the number of total mismatches  
+    - mode는 해당 object들과의 mismatch 수의 합이 가장 작은 벡터이다.  
+      -> 애트리뷰트마다 가장 많은 object가 차지하는 값을 갖는다.  
   - k-prototype: A mixture of categorical and numerical data   
   
   
-- Problem  
+- K-Means Method: Problem  
   
   - outliers에 민감하다.  
-  
+    너무 아웃라이어의 값이 다른 object의 값과 차이가 큰 경우, 클러스터가 잘못 분리될 가능성이 높다.  
+    
   ==> K-medoids  
   
 
 
 ### 3. The K-Medoids Clustering Method  
+: PAM, CLARA, CLARANS  
 
 - PAM  
   - Algorithm  
+    - k개의 대표적인 objects를 임시로 선택한다. = medoids *k는 사람이 정하는 것*  
+    - 선택되지 않은 모든 오브젝트들은 선택된 medoids 중에 가까운 것으로 할당한다.  
+    - 랜덤으로 non-medoid object h를 고른다.  
+    - total swapping cost TCih 를 계산한다.  
+    - 만약 TCih < 0 이면 i medoid는 h로 바뀌고 선택되지 않은 오브젝트들은 가장 가까운 오브젝트로 할당된다.  
+    - 변화가 없을 때까지 위 과정을 반복한다.  
+    
+  - Calculate total swapping cost  
+    - 각 non selected 오브젝트 j마다 i 대신 h를 medoid로 했을 때 j가 속하는 medoid 까지의 거리 d(j,h)와  
+      기존에 할당되어있던 j의 medoid 까지의 거리 d(j,i)의 차를 구하고 그 합을 total swapping cost라고 한다.   
+    - 만약 j 오브젝트의 medoid가 i가 h로 바뀌는 것과 상관없이 동일하면 해당 코스트는 0이 된다.  
   
   - Problem  
-    - 
+    - k-means 보다 노이즈나 아웃라이어에 robust하다는 장점이 있지만,  
+      큰 데이터셋에 대해서 잘 작동하지 않는다.  
+      O(ik(n-k)^2)  
+      n: the number of data, k: the number of clusters, i: the number of iterations  
     
     ==> CLARA  
+    이젠 또 스케일 문제로 clara 방식 사용  
   
 
 - CLARA  
-  -   
+  - 데이터셋의 샘플들을 뽑아내고 각 샘플마다 PAM을 적용하여 클러스터 결과를 가져온다.    
   - Strength  
+    : 샘플링한 데이터셋을 사용하기 때문에 더 큰 데이터를 다룰 수 있다.  
+    
   - Weakness  
-  
+    - 샘플 사이즈에 따라 효율성이 달라진다.  
+      : 너무 샘플 사이즈가 작으면 성능이 안좋을 수 있다.  
+    - 샘플을 잘 선정하지 않으면 좋은 클러스터링을 할 수 없다.  
   
 
 ## Hierarchical Methods  
