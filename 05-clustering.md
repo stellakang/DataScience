@@ -312,15 +312,21 @@
       내부 interconnectivity, closeness보다 interconnectivity, closeness가 큰 클러스터 끼리 합친다.  
       -> relative interconnectivity  
       RI(Ci,Cj) = |EC{ci,cj}|/1/2(|ECci|+|ECcj|)  
+      EC는 weight sum of cut edges이다.  
       -> relative closeness  
       RC(Ci,Cj) 식은 자료 참고    
 
 ## Density-Based Methods   
-:  
+: distance만으로 클러스터링하는 것이 아닌, density를 기반으로 클러스터링한다.   
 
 ### 1. Basic Concepts  
 
   - Major features  
+    - 임의의 모양의 클러스터를 찾을 수 있다.  
+    - 노이즈를 다룰 수 있다.  
+    - 한 번의 스캔으로 효율적이다.  
+    - 종료 조건으로 density parameter가 필요하다.  
+    
   - Several interesting studies  
     - DBSCAN  
     - OPTICS  
@@ -328,51 +334,76 @@
     
   - Two parameters  
     - Eps  
+    주변을 포함하는 최대 radius(반지름)    
+    eps를 반지름으로 하는 원을 이룬다.   
+    
     - MinPts  
+    eps가 포함하는 범위의 최소 points 갯수  
+    
+    - Neps(p): {q belongs to D | dist(p,q)<=Eps}  
     
   - Directly density-reachable   
-    :  
-    -  
+    a point p is directly density-reachable from a point q if      
+    - p belongs to Neps(q)  
+    - |Neps(q)|>=Minpts (이런 경우 q를 core point라고 한다!! core point condition)   
+    > p가 q의 neighborhood에 속하고 q의 neighborhood의 수가 minpts 이상인 경우    
+      그 반대는 성립하지 않는다!!  
   
   - Density-reachable  
-    :  
-    -   
+    a point p is density-reachable from a point q if    
+    - there is a chain of points p1, ..., pn, p1=q, pn=p such that pi+1 is directly density-reachable from pi    
+    > p1에서 q까지 directly density-reachable한 objects들이 연쇄적으로 있는 경우  
     
   - Density-connected  
-  
-
+    a point p is density-connected to a point q if  
+    - there is a point o such that both p and q are density-reachable from o w.r.t eps and minpts  
+    > q가 o로부터 density-reachable하고 p가 o로부터 density-reachable하면 p와 q는 density connected하다.  
+    
 ### 2. DBSCAN  
 
--  
--  
+- keyword: density-based, arbitrary shape   
+- maximal set of density-connected points   
 
 - Algorithm  
-  -  
-  -  
-  -  
+  - 임의로 p를 고른다.   
+  - p에서 density-reachable한 모든 point들을 찾는다.   
+  - p가 core point이면 클러스터가 형성되고 아니면 border point 이므로 다른 point를 방문한다.  
+  - 모든 points들을 방문할 때까지 진행한다.  
 
+-> 파라미터에 따라 클러스터가 다르게 형성됨!!  
 
 ### 3. OPTICS  
 
 - Concepts  
-  -  
-  -  
+  - point를 ordering하는 것!!  
+  - idea  
+    - core distance(of o)    
+      object가 core point가 되도록 하는 거리  
+    - rechability distance(of p from o)    
+      r(p,o) = max(core-distance(o), d(o,p))   
 
 - Process  
-
+  - 시작점 하나를 정하여 그래프에 표기, reachablity distance가 아직 정의되지 않은 상태이니까 undefined로 둔다.  
+  - core distance를 기반으로 다른 모든 점의 reachable distance를 갱신한다.  
+  - 가장 가까운 점을 두번째 점으로 하여 그래프 두번째에 표기  
+  - 두번째를 중심으로 reachable distance를 갱신하고 가장 가까운 점을 세번째 점으로 고른다.  
+  - 계속 반복하면 eps를 정하여 그것을 기준으로 잘라내면 클러스터가 각각 생성된다.  
 
 
 ## Outlier Analysis  
 
 ### 1. What is Outlier Discovery  
 
--  
+- 다른 데이터와 매우 다른 objects  
+
 - Problem  
+  : 아웃라이어를 정의, 찾는 것  
+  
 - Applications  
-  -  
-  -  
-  -  
-  -  
+  - 신용카드 사기 
+  - 텔레콤 사기   
+  - 사용자 분석   
+  - 의료 분석   
   
 
 ### 2. Outlier Discovery: Statistical Approaches  
