@@ -254,10 +254,48 @@
 : agglomerative clustering method의 문제는 많은 오브젝트들을 다루기 어렵다. (time complexity가 크다.)   
 
 - BIRCH  
-  keyword: CF-tree  
+  keyword: CF-tree, numeric data    
+  
+  - Clustering Feature: (N, LS, SS)  
+    - 클러스터의 특성을 저장.  
+    - N: The number of data points  
+    - LS: dataset의 모든 합(x좌표는 x좌표끼리) -> **N으로 나눠서 centroid 구할 수 있음**   
+    - SS: dataset의 제곱의 합(x좌표는 x좌표끼리) -> **N(N-1)로 나누고 루트씌우면 diameter 구할 수 있음**     
+  
+  - CF-tree  
+    - height-balanced tree  
+    - non-leaf node는 자식의 CF의 합을 저장한다.  
+    - 파라미터  
+      Branching factor: 최대 자식 수를 명시한다.    
+      threshold: leaf node에 저장되는 최대 diameter를 명시한다.  
+  
+  - Algorithm  
+    - scan DB하여 CF tree를 빌드한다.  
+      처음엔 아무것도 없고 첫번째 object를 추가하면 1개의 cf가 생긴다. (이때 n=1, linear=값 자신, square=자신의 제곱)  
+      여기서 하나 더 추가하면 n=2된다. 계속 반복하여 diameter가 threshold를 넘으면 split하여 또다른 cf를 만든다.  
+      leaf node=1, 2 cf 상태에서 이렇게 cf를 계속 만들어가다가 branching factor를 넘으면 2 leaf node로 균형되게 분리한다.  
+      리프노드 만들고 또 넘치면 나누는 식으로 반복한다.  
+    - 임의의 클러스터링 알고리즘을 사용하여 리프노드를 클러스터링한다.  
+    
+  - Scales linearly  
+    - 한 번의 스캔으로 좋은 클러스터링을 찾을 수 있다.  
+  
+  - Weakness  
+    - numeric data를 다루고 data의 순서에 따라 결과가 달라진다.  
+    
+    
 
 - ROCK  
-  keyword: categorical data, link analysis   
+  keyword: categorical data, link analysis(not distance-based)     
+  
+  - Similarity measure: "link measure"    
+    - jaccard coefficient  
+      Sim(T1,T2)=|intersection(T1,T2)|/|T1 U T2|  
+      -> jaccard coefficient의 문제점: 같은 클러스터 안의 object끼리 similarity보다 다른 클러스터의 object끼리 similarity가 더 높은 경우가 발생  
+  
+    - links  
+      The number of common neighbors  
+      두 페어의 jc가 threshold를 넘으면 neighbors이다.  
 
 - CHAMELEON  
   keyword: dynamic modeling  
