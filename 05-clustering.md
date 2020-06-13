@@ -409,17 +409,27 @@
 ### 2. Outlier Discovery: Statistical Approaches  
 
 - Use discordancy tests depending on  
-  - 
-  
+  - data distribution: 예를 들어, normal distribution    
+  - distribution parameter: mean, variance  
+  - number of expected outliers: 예를들어, 위, 아래 2.5퍼센트    
   
 - Drawbacks  
-  - 
-  
+  - single attribute를 위한 테스트가 많다. -> 실제로 데이터가 많은 애트리뷰트를 가지고 있으니    
+  - 많은 경우, data distribution이 잘 알려져있지 않다.    
 
 ### 3. Outlier Discovery: Distance-Based Approach  
 
--  
--  
--  
+- 위의 문제를 해결하기 위한 방법!!  
+  multi-dimensional & without knowing data distribution  
+- Distance-based outlier(DB(p,D)-outlier): 모든 페어에 대해서 distance 계산하고 p비율 이상 점o에서 D거리 이상 떨어져있으면 o는 outlier이다.    
+- Algorithms for mining distance-based outliers  
+  - index-based algorithm  
+  - nested-loop algorithm  
+  - cell-based algorithm   
+
+- Density-based local outlier detection  
+  - distance-based는 global distance distribution을 기반으로 하므로 uniform하게 분포되어있지 않으면 힘들다.  
+    -> 그래서 이를 개선하기 위해 여기선 local로!!    
+  - DB(p,D)-outlier 방법을 사용하면 D값을 설정해야 하는데 각 클러스터마다 떨어진 거리가 다르면 힘들어지므로 제안된 방식!  
 
 
