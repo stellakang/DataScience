@@ -299,6 +299,21 @@
 
 - CHAMELEON  
   keyword: dynamic modeling  
+  
+    
+  - Algorithm  
+    - k-nearest neighbor 그래프를 그린다.  
+      - Node: object, edge: k-nearest neighbor's link, weight: similarity  
+    
+    - graph partitioning algorithm: metis  
+      작은 클러스터들로 클러스터링한다.  
+      -> 그래프를 거의 같은 사이즈의 서브그래프로 나눈다.  
+    - agglomerative hierarchical clustering algorithm  
+      내부 interconnectivity, closeness보다 interconnectivity, closeness가 큰 클러스터 끼리 합친다.  
+      -> relative interconnectivity  
+      RI(Ci,Cj) = |EC{ci,cj}|/1/2(|ECci|+|ECcj|)  
+      -> relative closeness  
+      RC(Ci,Cj) 식은 자료 참고    
 
 ## Density-Based Methods   
 :  
