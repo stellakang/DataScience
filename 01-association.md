@@ -35,7 +35,7 @@ Semantic data compression
   > (아이템셋 X와 Y를 모두 포함하는 트랜잭션의 수)/(전체 트랜잭션의 수)  
 
 - **confidence** : conditional probability that a transaction having X also contains Y  
-  > (아이템셋 Y를 포함하는 트랜잭션의 수)/(X를 포함하는 트랜잭션의 수)  
+  > (아이템셋 X,Y를 포함하는 트랜잭션의 수)/(X를 포함하는 트랜잭션의 수)  
 <br>  
 
 **문제)**    
