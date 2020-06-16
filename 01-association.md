@@ -215,7 +215,7 @@ itemset X is a max-pattern if X is frequent and there exists no frequent super-p
    
    Conditional FP-tree에서 모든 frequent itemsets 구하기     
    예를 들어, f(3)-c(3)-a(3)이 m-conditional FP-tree 이면     
-   -> fm, cm, am, fam, cam, fcm, fcam  
+   -> m, fm, cm, am, fam, cam, fcm, fcam  
    만약, conditional FP-tree에 single prefix path가 있으면 single 부분과 아닌 부분으로 나누어서 각각 구한 후, 붙인다.
    
    이 과정을 빈도수가 낮은 아이템부터 conditional FP-tree를 생성해나가다가  
