@@ -1,1 +1,14 @@
+# Outlier Detection  
+
+## 1. Concepts  
+
+- 정의: 다른 오브젝트들과 상대적으로 유사하지 않은 오브젝트를 outlier이라고 한다.  
+- 응용 분야: 네트워크 침입 탐지 시스템, 약물 오용, 금융 사기 탐지  
+- Previous methods: Statistics-based outlier detection, Distance-based outlier detection,  
+                    Density-based outlier detection, RWR-based outlier detection  
+                    
+## 2. Statistics-based Outlier Detection  
+- 통계 기반 방식!  
+- 가장 적당한 통계 분포 모델을 찾는다. (statistical distribution model)  
+
 
