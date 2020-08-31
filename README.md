@@ -11,7 +11,7 @@ data science class
  [5. Outlier detection](./06-outlier-detection.md)  
  
  
-## Assignment  
+## [Assignment](./assignment)    
 > C++ implementation of 4 algorithms below   
 
 [1. Apriori algorithm](./assignment/assignment1)  
