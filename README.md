@@ -9,7 +9,9 @@ data science class
  [3. Classification](./03-classification.md)  
  [4. Clustering](./05-clustering.md)  
  [5. Outlier detection](./06-outlier-detection.md)  
- 
+ [6. Data concept description](./07-data-concept-description.md)  
+ [7. Data preprocessing](./08-data-preprocessing.md)  
+ [8. Social network](./09-social-network.md)  
  
 ## [Assignment](./assignment)    
 > C++ implementation of 4 algorithms below   
